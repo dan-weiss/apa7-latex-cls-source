@@ -4,11 +4,11 @@
 %                                                                           %
 %    CHANGE THESE VALUES WITH EACH NEW RELEASE:                             %
 %                                                                           %
-%<class>\ProvidesClass{apa7}[2020/06/19 v1.09 APA formatting (7th edition)]
+%<class>\ProvidesClass{apa7}[2020/06/27 v1.10 APA formatting (7th edition)]
 %                                                                           %
 %<*internal>                                                                %
-\def\apaSevenVersionDate{2020/06/19}
-\def\apaSevenVersionNumber{1.09}
+\def\apaSevenVersionDate{2020/06/27}
+\def\apaSevenVersionNumber{1.10}
 %                                                                           %
 %                                                                           %
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -246,6 +246,8 @@ and the derived files           apa7.ins,
 % \changes{v1.08}{2020/05/27}{Added support for optional running head (shorttitle) in stu mode.}
 %
 % \changes{v1.09}{2020/06/19}{Fixed note command (will no longer print "Author Note" header).}
+%
+% \changes{v1.10}{2020/06/27}{Fixed spacing for on Title Page for title and author. Re-wrote author and affiliation to be APA7 compliant.}
 %
 % \begin{abstract}
 %   The \textit{Publication Manual} of the American Psychological
@@ -1843,42 +1845,12 @@ and the derived files           apa7.ins,
 %===== apa.cls main declarations for title page contents =====
 
 \long\def\title#1{\long\def\@title{#1}}
-\long\def\author#1{\long\def\@author{#1}}
+\long\def\author#1{\authorsnames{#1}}
 \long\def\course#1{\long\def\@course{#1}}
 \long\def\professor#1{\long\def\@professor{#1}}
 \long\def\duedate#1{\long\def\@duedate{#1}}
 \long\def\shorttitle#1{\long\def\@shorttitle{#1}}
-\long\def\twoauthors#1#2{\long\def\@authorOne{#1}\long\def\@authorTwo{#2}%
- \long\def\@author{#1}}
-\long\def\onetwoauthors#1#2#3{\long\def\@authorOne{#1}\long\def\@authorTwo{#2}%
- \long\def\@authorThree{#3}\long\def\@author{#1}}
-\long\def\twooneauthors#1#2#3{\long\def\@authorOne{#1}\long\def\@authorTwo{#2}%
- \long\def\@authorThree{#3}\long\def\@author{#1}\def\@twofirst{1}}
-\let\threeauthors=\onetwoauthors
-\long\def\fourauthors#1#2#3#4{\long\def\@authorOne{#1}\long\def\@authorTwo{#2}%
- \long\def\@authorThree{#3}\long\def\@authorFour{#4}\long\def\@author{#1}}
-\long\def\fiveauthors#1#2#3#4#5{\long\def\@authorOne{#1}\long\def\@authorTwo{#2}%%%%
- \long\def\@authorThree{#3}\long\def\@authorFour{#4}\long\def\@authorFive{#5}%    %%
- \long\def\@author{#1}} %%     2006/01/05 -- added as contributed by Aaron Geller %%
-\long\def\sixauthors#1#2#3#4#5#6{\long\def\@authorOne{#1}%                  %% thp 2006/01/05
- \long\def\@authorTwo{#2}\long\def\@authorThree{#3}\long\def\@authorFour{#4}%% thp 2006/01/05
- \long\def\@authorFive{#5}\long\def\@authorSix{#6}\long\def\@author{#1}}    %% thp 2006/01/05
-\long\def\affiliation#1{\long\def\@affil{#1}}
-\long\def\twoaffiliations#1#2{\long\def\@affilOne{#1}\long\def\@affilTwo{#2}%
-\long\def\@affil{#1}}
-\long\def\onetwoaffiliations#1#2#3{\long\def\@affilOne{#1}\long\def\@affilTwo{#2}%
- \long\def\@affilThree{#3}\long\def\@affil{#1}}
-\long\def\twooneaffiliations#1#2#3{\long\def\@affilOne{#1}\long\def\@affilTwo{#2}%
- \long\def\@affilThree{#3}\long\def\@affil{#1}}
-\let\threeaffiliations=\onetwoaffiliations
-\long\def\fouraffiliations#1#2#3#4{\long\def\@affilOne{#1}\long\def\@affilTwo{#2}%
- \long\def\@affilThree{#3}\long\def\@affilFour{#4}\long\def\@affil{#1}}
-\long\def\fiveaffiliations#1#2#3#4#5{\long\def\@affilOne{#1}\long\def\@affilTwo{#2}%%
- \long\def\@affilThree{#3}\long\def\@affilFour{#4}\long\def\@affilFive{#5}%        %%
- \long\def\@affil{#1}} %%     2006/01/05 -- added as contributed by Aaron Geller   %%
-\long\def\sixaffiliations#1#2#3#4#5#6{\long\def\@affilOne{#1}%           %% thp 2006/01/05
- \long\def\@affilTwo{#2}\long\def\@affilThree{#3}\long\def\@affilFour{#4}%% thp 2006/01/05
- \long\def\@affilFive{#5}\long\def\@affilSix{#6}\long\def\@affil{#1}}    %% thp 2006/01/05
+\long\def\affiliation#1{\authorsaffiliations{#1}}
 \long\def\note#1{\long\def\@note{#1}}
 \long\def\abstract#1{\long\def\@abstract{#1}}
 \long\def\keywords#1{\long\def\@keywords{#1}}
@@ -1888,52 +1860,152 @@ and the derived files           apa7.ins,
 \def\volume#1{\def\@vvolume{#1}}
 \def\ccoppy#1{\def\@ccoppy{#1}}
 \def\copnum#1{\def\@copnum{#1}}
-\def\@error@toomanyauthors{\ClassWarningNoLine{apa7}{More authors than affiliations defined}}
-\def\@error@toomanyaffils{\ClassWarningNoLine{apa7}{More affiliations than authors defined}}
+
+% Combined code from https://tex.stackexchange.com/questions/297507/how-to-apply-a-do-function-to-two-lists and 
+% https://www.dickimaw-books.com/latex/admin/html/exercises/oxfordcomma.shtml
+
+% Create etoolbox lists for multiple authors and affiliations
+\newcommand*\listauthors{}
+\newcommand*\listsuperscripts{}
+\newcommand*\listaffiliations{}
+
+\newcommand*{\authorsnames}[2][]{
+  \def\def@multipleauthors{\@multipleauthorsmode} %
+  \renewcommand*\listauthors{}
+  \renewcommand*\listsuperscripts{}
+  \newcounter{NumberOfAuthors}
+  \newcounter{NumberOfSuperscripts}
+  \forcsvlist{\stepcounter{NumberOfAuthors}\listadd\listauthors}{#2}
+  \forcsvlist{\stepcounter{NumberOfSuperscripts}\listadd\listsuperscripts}{#1}
+  }
+  
+  \newcommand*{\authorsaffiliations}[1]{
+  \def\def@multipleaffils{\@multipleaffilsmode} %
+  \renewcommand*\listaffiliations{}
+  \newcounter{NumberOfAffiliations}
+  \forcsvlist{\stepcounter{NumberOfAffiliations}\listadd\listaffiliations}{#1}
+  }
+
+\makeatletter
+  \catcode`\|=3
+  
+\def\looptwo#1#2{%
+    \edef\tmp{\noexpand\xtwo%
+      \unexpanded\expandafter{#1}\relax  % no added delimiter here
+      \unexpanded\expandafter{#2}\relax  % no added delimiter here
+    } \tmp%
+  }%
+  
+\def\xtwo#1|#2\relax#3|#4\relax{%
+    \dotwo{#1}{#3}%
+    \def\tmp{#2}%
+    \ifx\empty\tmp%
+      \expandafter\@gobble%
+    \else%
+      \expandafter\@firstofone%
+    \fi%
+    {\xtwo#2\relax#4\relax}%
+  }%
+
+  \catcode`\|=12
+\makeatother
+
+\newcommand*{\dotwo}[2]{}
+
+\newcommand*{\authorsep}{}%
+\newcommand*{\lastauthor}{}%
+\newcommand*{\prelastauthor}{}%
+\newcommand*{\prelastauthorsep}{}%
+
+\newcommand{\displayauthors}{%
+  \renewcommand*{\authorsep}{}%
+  \renewcommand*{\lastauthor}{}%
+  \renewcommand*{\prelastauthor}{}%
+  \renewcommand*{\prelastauthorsep}{}%
+  \ifnum\value{NumberOfSuperscripts}=0% If no superscripts are specified, print authors without superscripts.
+	\renewcommand*{\do}[1]{%
+      \authorsep%
+    \lastauthor%
+    \renewcommand{\lastauthor}{%
+      \renewcommand{\authorsep}{, 
+        \renewcommand*{\prelastauthorsep}{,}}%
+      \renewcommand{\prelastauthor}{\prelastauthorsep\ and }%
+      ##1%
+    }%
+      }%
+    \dolistloop{\listauthors}%
+  \else
+    \renewcommand*{\dotwo}[2]{%
+    \authorsep%
+    \lastauthor%
+    \renewcommand{\lastauthor}{%
+      \renewcommand{\authorsep}{, 
+        \renewcommand*{\prelastauthorsep}{,}}%
+      \renewcommand{\prelastauthor}{\prelastauthorsep\ and }%
+      ##1\textsuperscript{##2}%
+    }%
+  }%
+  \looptwo\listauthors\listsuperscripts%
+  \fi
+  \prelastauthor \lastauthor%
+}
+
+\newcommand{\displayaffiliations}{%
+  \ifnum\value{NumberOfSuperscripts}=0% If no superscripts are specified, print affiliations without superscripts.
+  \renewcommand*{\do}[1]{%
+      ##1\\%
+  }%
+  \else
+  \newcounter{AffiliationNumber}
+  \renewcommand*{\do}[1]{%
+      \stepcounter{AffiliationNumber}
+      \textsuperscript{\arabic{AffiliationNumber}}##1\\%
+  }%
+  \fi
+  \dolistloop{\listaffiliations}%
+}
+
+\makeatletter
+
+%% LOOK FOR ALL \@author and \@affil and update as appropriate
+%% ADD IN ERROR/notice of deprecated command for multiple author/multiple affiliation
+%% FIGURE OUT jou style
+%% UPDATE documentation
+
 \def\check@author{%
- \@ifundefined{@author}{%
-  \ClassWarningNoLine{apa7}{Author not defined}\def\@author{Author}}{}
+ \@ifundefined{def@multipleauthors}{%
+  \ClassWarningNoLine{apa7}{Author not defined}\authorsnames{Author}}{}
  \@ifundefined{@title}{%
   \ClassWarningNoLine{apa7}{Title not defined}\def\@title{Title}}{}
- \@ifundefined{@affil}{%
-  \ClassWarningNoLine{apa7}{Affiliation not defined}\def\@affil{Affiliation}}{}
-   \@ifundefined{def@stu}{%
+ \@ifundefined{def@multipleaffils}{%
+  \ClassWarningNoLine{apa7}{Affiliation not defined}\authorsaffiliations{Affiliation}}{}
+   \@ifundefined{def@stu}{% man mode
    	\@ifundefined{@shorttitle}{%
  	 \ClassWarningNoLine{apa7}{Short title not defined}\def\@shorttitle{INSERT SHORTTITLE COMMAND IN PREAMBLE}}{}
  	\@ifundefined{@abstract}{%
   	\ClassWarningNoLine{apa7}{Abstract not defined}}{}
  	\@ifundefined{@keywords}{%
  	 \ClassInfo{apa7}{Keywords not defined}}{}
-	 }{
+	 }{ % stu mode
 	 \@ifundefined{@course}{%
- 	 \ClassWarningNoLine{apa7}{Course title not defined}}{}
+ 	 \ClassWarningNoLine{apa7}{Course title not defined}\def\@course{Course Title}}{}
  	\@ifundefined{@professor}{%
-  	\ClassWarningNoLine{apa7}{Professor not defined}}{}
+  	\ClassWarningNoLine{apa7}{Professor not defined}\def\@professor{Professor Name}}{}
  	\@ifundefined{@duedate}{%
- 	 \ClassInfo{apa7}{Due date not defined}}{}
+ 	 \ClassWarningNoLine{apa7}{Due date not defined}\def\@duedate{Due Date}}{}
 	 \@ifundefined{@shorttitle}{%
-         \def\@shorttitle{}}{}
+         \def\@shorttitle{}}{}%
 	 }
- \@ifundefined{@authorSix}{%                                   % -- thp 2006/01/05
-  \@ifundefined{@authorFive}{%                                 % -- thp 2006/01/05
-   \@ifundefined{@authorFour}{%
-    \@ifundefined{@authorThree}{%
-     \@ifundefined{@authorTwo}{%
-     }{\@ifundefined{@affilTwo}{\@error@toomanyauthors}{}}
-    }{\@ifundefined{@affilThree}{\@error@toomanyauthors}{}}
-   }{\@ifundefined{@affilFour}{\@error@toomanyauthors}{}}
-  }{\@ifundefined{@affilFive}{\@error@toomanyauthors}{}}       % -- thp 2006/01/05
- }{\@ifundefined{@affilSix}{\@error@toomanyauthors}{}}         % -- thp 2006/01/05
- \@ifundefined{@affilSix}{%                                    % -- thp 2006/01/05
-  \@ifundefined{@affilFive}{%                                  % -- thp 2006/01/05
-   \@ifundefined{@affilFour}{%
-    \@ifundefined{@affilThree}{%
-     \@ifundefined{@affilTwo}{%
-     }{\@ifundefined{@authorTwo}{\@error@toomanyaffils}{}}
-    }{\@ifundefined{@authorThree}{\@error@toomanyaffils}{}}
-   }{\@ifundefined{@authorFour}{\@error@toomanyaffils}{}}
-  }{\@ifundefined{@authorFive}{\@error@toomanyaffils}{}}       % -- thp 2006/01/05
- }{\@ifundefined{@authorSix}{\@error@toomanyaffils}{}}         % -- thp 2006/01/05
+	 \@ifundefined{def@multipleauthors}{}{%
+	   \ifnum\value{NumberOfSuperscripts}=0%
+	   	% do nothing. If no superscripts are specified, print authors and affiliations without superscripts.
+	   \else \ifnum\value{NumberOfAuthors}=\value{NumberOfSuperscripts}%
+	         % do nothing
+	         \else 
+	       		\ClassError{apa7}{Number of Authors does not match number of Superscripts}{Please provide an equal number of authors and superscripts.}
+		 \fi
+	   \fi
+          }%
 }
 
 %==== Automatic figure size and orientation determination ====
@@ -2428,91 +2500,24 @@ and the derived files           apa7.ins,
 
 
   \begin{center}
-  \vspace*{0.5in}
+  
 %  \makebox[\linewidth][l]{\rheadname\hspace{0.1in}\MakeUppercase{\r@headr}}\\ %thp090298
 
-  \vspace*{1in}
+  \vspace*{4\baselineskip}
   \textbf\@title%
   \ifapamodeman{%
     \@ifundefined{def@noextraspace}{%
-      \vspace{0.25in}\\
+      \vspace{\baselineskip}\\
     }{}
   }{%
-    \vspace{0.25in}\\
+    \vspace{\baselineskip}\\
   }
 \@ifundefined{def@stu}{ %Professional manuscript
   \@ifundefined{apaSeven@maskauthoridentity}{%  BDB
+      
+      \displayauthors \\
+      \displayaffiliations
 
-      \@ifundefined{@authorTwo}{
-      \@author \\
-
-      \@affil \vspace{0.25in} \\ }{
-      \@ifundefined{@authorThree}{
-      \@authorOne \\
-
-      \@affilOne \vspace{0.2in} \\
-      \@authorTwo \\
-
-      \@affilTwo \vspace{0.25in} \\ }{
-      \@ifundefined{@authorFour}{
-      \@authorOne \\
-
-      \@affilOne \vspace{0.2in} \\
-      \@authorTwo \\
-
-      \@affilTwo \vspace{0.2in} \\
-      \@authorThree \\
-
-      \@affilThree \vspace{0.25in} \\ }{
-      \@ifundefined{@authorFive}{       %% 2006/01/05 added as contributed by Aaron Geller
-      \@authorOne \\
-
-      \@affilOne \vspace{0.2in} \\
-      \@authorTwo \\
-
-      \@affilTwo \vspace{0.2in} \\
-      \@authorThree \\
-
-      \@affilThree \vspace{0.2in} \\
-      \@authorFour \\
-
-      \@affilFour \vspace{0.25in} \\ }{ %% 2006/01/05 beginning of Aaron Geller contribution
-      \@ifundefined{@authorSix}{ %% -- thp 2006/01/05
-      \@authorOne \\
-
-      \@affilOne \vspace{0.2in} \\
-      \@authorTwo \\
-
-      \@affilTwo \vspace{0.2in} \\
-      \@authorThree \\
-
-      \@affilThree \vspace{0.2in} \\
-      \@authorFour \\
-
-      \@affilFour \vspace{0.2in} \\ %% thp corrected distance to non-final value of 0.2in
-      \@authorFive \\
-
-      \@affilFive \vspace{0.25in} \\ }{%% 2006/01/05 end of Aaaron Geller contribution
-    %% --- thp 2006/01/05 beginning of six-author display
-      \@authorOne \\
-
-      \@affilOne \vspace{0.2in} \\
-      \@authorTwo \\
-
-      \@affilTwo \vspace{0.2in} \\
-      \@authorThree \\
-
-      \@affilThree \vspace{0.2in} \\
-      \@authorFour \\
-
-      \@affilFour \vspace{0.2in} \\
-      \@authorFive \\
-
-      \@affilFive \vspace{0.2in} \\
-      \@authorSix \\
-
-      \@affilSix \vspace{0.25in} \\ }}}}}
-    %% --- thp 2006/01/05 end of six-author display
       \@ifundefined{@note}
        {\vspace*{\baselineskip} }
        {\@note}
@@ -2534,9 +2539,10 @@ and the derived files           apa7.ins,
        }
   }{%  mask author identity -- show nothing in the author or author note space
   }}{% Student Manuscript
-      \@author \\
-
-      \@affil \\ 
+      \displayauthors \\
+      
+      \displayaffiliations
+      
       \@course \\ 
       \@professor \\ 
       \@duedate \\ 
@@ -2755,7 +2761,7 @@ and the derived files           apa7.ins,
 \def\maketitle{
  \check@author
  \@ifundefined{r@headr}{\def\r@headr{\protect\MakeUppercase{\protect\scriptsize\@title}}}{}
- \@ifundefined{r@headl}{\def\r@headl{\protect\MakeUppercase{\protect\scriptsize\@author}}}{}
+ \@ifundefined{r@headl}{\def\r@headl{ADD \\LEFTHEADER COMMAND}}{}
 
 \twocolumn[  % anything appearing within the brackets is set in one-column mode
   \vspace{0.03in}
@@ -3062,87 +3068,9 @@ and the derived files           apa7.ins,
   \vspace{0.3in}
   \@ifundefined{apaSeven@maskauthoridentity}{%  BDB
 
-      \@ifundefined{@authorTwo}{
-    % one author-affiliation
-      {\Large \@author} \\
+      {\Large \displayauthors} \\
 
-      \@affil \vspace{0.1in} \\ }{
-      \@ifundefined{@authorThree}{
-    % two authors-affiliations
-      {\Large \@authorOne} \\
-
-      \@affilOne \vspace{0.1in} \\
-      {\Large \@authorTwo}\\
-
-      \@affilTwo \vspace{0.1in} \\ }{
-      \@ifundefined{@authorFour}{
-    % three authors-affiliations
-      {\Large \@authorOne} \\
-
-      \@affilOne \vspace{0.1in} \\
-      {\Large \@authorTwo}\\
-
-      \@affilTwo \vspace{0.1in} \\
-      {\Large \@authorThree}\\
-
-      \@affilThree \vspace{0.1in} \\ }{
-      \@ifundefined{@authorFive}{ %% 2006/01/05 added as contributed by Aaron Geller
-    % four authors-affiliations
-      {\Large \@authorOne} \\
-
-      \@affilOne \vspace{0.1in} \\
-      {\Large \@authorTwo}\\
-
-      \@affilTwo \vspace{0.1in} \\
-      {\Large \@authorThree}\\
-
-      \@affilThree \vspace{0.1in} \\
-      {\Large \@authorFour}\\
-
-      \@affilFour \vspace{0.1in} \\ }{  %%% 2006/01/05 beginning of Aaron Geller contribution
-      \@ifundefined{@authorSix}{ %% -- thp 2006/01/05
-    % five authors-affiliations
-      {\Large \@authorOne} \\
-
-      \@affilOne \vspace{0.1in} \\
-      {\Large \@authorTwo}\\
-
-      \@affilTwo \vspace{0.1in} \\
-      {\Large \@authorThree}\\
-
-      \@affilThree \vspace{0.1in} \\
-      {\Large \@authorFour}\\
-
-      \@affilFour \vspace{0.1in} \\
-      {\Large \@authorFive}\\
-
-      \@affilFive \vspace{0.1in} \\ }{  %%% 2006/01/05 end of Aaron Geller contribution
-    % six authors-affiliations
-    %% --- thp 2006/01/05 beginning of six-author display
-      {\Large \@authorOne} \\
-
-      \@affilOne \vspace{0.1in} \\
-      {\Large \@authorTwo}\\
-
-      \@affilTwo \vspace{0.1in} \\
-      {\Large \@authorThree}\\
-
-      \@affilThree \vspace{0.1in} \\
-      {\Large \@authorFour}\\
-
-      \@affilFour \vspace{0.1in} \\
-      {\Large \@authorFive}\\
-
-      \@affilFive \vspace{0.1in} \\
-      {\Large \@authorSix}\\
-
-      \@affilSix \vspace{0.1in} \\ }
-    %% --- thp 2006/01/05 end of six-author display
-    }}}}
-    %
-      \@ifundefined{@note}
-       {\vspace*{\baselineskip} }
-       {\@note\vspace{0.2in}}
+      \displayaffiliations \vspace{0.1in}
 
   }{%  mask author identity -- show nothing in the author note space
   }
@@ -3480,8 +3408,8 @@ and the derived files           apa7.ins,
 
 \title{Sample APA-Style Document Using the \textsf{apa7} Package}
 
-\author{Daniel A. Weiss}
-\affiliation{A University Somewhere}
+\authorsnames{Daniel A. Weiss}
+\authorsaffiliations{A University Somewhere}
 
 \leftheader{Weiss}
 
@@ -3597,8 +3525,8 @@ skill in interpreting the results for the masses.
 \title{Sample APA-Style Document Using the \textsf{apa7} Package}
 \shorttitle{Sample Document}
 
-\author{Daniel A. Weiss}
-\affiliation{A University Somewhere}
+\authorsnames{Daniel A. Weiss}
+\authorsaffiliations{A University Somewhere}
 
 \leftheader{Weiss}
 
