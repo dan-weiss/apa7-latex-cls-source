@@ -4,11 +4,11 @@
 %                                                                           %
 %    CHANGE THESE VALUES WITH EACH NEW RELEASE:                             %
 %                                                                           %
-%<class>\ProvidesClass{apa7}[2020/06/19 v1.09 APA formatting (7th edition)]
+%<class>\ProvidesClass{apa7}[2020/07/18 v2.01 APA formatting (7th edition)]
 %                                                                           %
 %<*internal>                                                                %
-\def\apaSevenVersionDate{2020/06/19}
-\def\apaSevenVersionNumber{1.09}
+\def\apaSevenVersionDate{2020/07/18}
+\def\apaSevenVersionNumber{2.01}
 %                                                                           %
 %                                                                           %
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -247,6 +247,8 @@ and the derived files           apa7.ins,
 %
 % \changes{v1.09}{2020/06/19}{Fixed note command (will no longer print "Author Note" header).}
 %
+% \changes{v2.01}{2020/07/18}{Re-wrote author and affiliation to be APA7 compliant. Fixed spacing on Title Page for title and author. }
+%
 % \begin{abstract}
 %   The \textit{Publication Manual} of the American Psychological
 %   Association is widely used in the social sciences.  The most
@@ -275,6 +277,13 @@ and the derived files           apa7.ins,
 % between APA requirements and the output of this class.  However, it
 % is the sole responsibility of the user to ensure compliance with
 % specific journal submission requirements!
+%
+% \section{\textsf{apa7} Version 2.01 Changes to Authors and Affiliations}
+% The way that authors and affiliations work has been changed in 
+% version 2.01 to be APA 7th edition compliant. 
+% This change will require updating any multiple author and/or 
+% multiple affiliation documents to use the new |\authorsnames| and
+% |\authorsaffiliations| commands (See Section~\ref{sec:authorsaffiliations}).
 %
 % \section{Usage}
 % \label{sec:usage}
@@ -385,38 +394,90 @@ and the derived files           apa7.ins,
 % The following commands are available within the document preamble
 % (i.e., the part of the file preceding |\begin{document}|).
 %
+% \subsubsection{Document Title and Headers}
+% \label{sec:titleheaders}
 % \begin{itemize}
 % \item \DescribeMacro{\title}|\title|\marg{document-title}: The title of the document
 % \item \DescribeMacro{\shorttitle}|\shorttitle|\marg{short-title}: A
 %   shortened version of the title (for page headers)
-% \item \DescribeMacro{\author}|\author|\marg{author(s)}: Author name(s)
+% \item
+%   \DescribeMacro{\leftheader}|\leftheader|\marg{author-last-name(s)}:
+%   Author last name(s) (for even-page headers in |jou| mode)
+% \end{itemize}
+% Optional; use if desired:\par
+% \begin{itemize}
+% \item \DescribeMacro{\journal}|\journal|\marg{journal-name}: Journal
+%   name or other note; typeset in the top left header of page 1
+%   (|jou| and |doc| modes only); to change the starting page to a
+%   number other than 1, insert the following line immediately after
+%   |\maketitle|:\\
+%   |\setcounter{page}|\marg{custom-page-number}
+% \item \DescribeMacro{\volume}|\volume|\marg{journal-volume}: Volume,
+%   number, pages; typeset in the top left header in |jou| and |doc|
+%   modes, underneath the content of |\journal|
+% \item \DescribeMacro{\ccoppy}|\ccoppy|\marg{copright-notice}:
+%   Copyright notice, etc.; typeset in the top right header of page 1
+%   (|jou| and |doc| modes only)
+% \item \DescribeMacro{\copnum}|\copnum|\marg{more-copyright-info}:
+%   Any additional text needed; typeset in the top right header in
+%   |jou| and |doc| modes, underneath the content of |\ccoppy|
 % \end{itemize}
 %
-% For authors across multiple affiliations, follow these formats,
-% noting that authors must be matched in sequence with their
-% affiliations in the |\affiliation| command (hence multiple authors
-% inside some braces represent multiple authors from the same
-% institution):\par
+% \subsubsection{Authors and Affiliations}
+% \label{sec:authorsaffiliations}
+% Based on the new APA 7th edition style guide, the previous method for 
+% handling multiple authors and multiple affiliations has been deprecated as of version 2.01 of apa7. \par
+% \textit{The followings commands have been deprecated and will return an error:} \par
 % |\twoauthors{First Author(s)}{Second Author(s)}|\par
 % |\threeauthors{John and Jim}{Mary and Sue}{Nick}|\par
 % |\fourauthors{Helen}{Dick}{Tracy and Larry}{James Bond}|\par
 % |\fiveauthors{...}{...}{...}{...}{...}|\par
 % |\sixauthors{...}{...}{...}{...}{...}{...}|\par
-% \begin{itemize}
-% \item
-%   \DescribeMacro{\leftheader}|\leftheader|\marg{author-last-name(s)}:
-%   Author last name(s) (for even-page headers in |jou| mode)
-% \item
-%   \DescribeMacro{\affiliation}|\affiliation|\marg{affiliation(s)}:
-%   Author affiliation(s)
-% \end{itemize}
-%
-% For multiple affiliations, follow these formats:\par
 % |\twoaffiliations{Affil. of 1st Author(s)}{Affil. 2nd Author(s)}|\par
 % |\threeaffiliations{U of A}{U of B}{U of C}|\par
 % |\fouraffiliations{My Company}{Your Department}{Heaven}{Earth}|\par
 % |\fiveaffiliations{...}{...}{...}{...}{...}|\par
 % |\sixaffiliations{...}{...}{...}{...}{...}{...}|\par
+% \begin{itemize}
+% \item \DescribeMacro{\author}|\author|\marg{author name}: Author name (if only 1 author)
+% \item \DescribeMacro{\affiliation}|\affiliation|\marg{author's affiliation}: Author's affiliation (if only 1 affiliation)
+% \item \DescribeMacro{\authorsnames}|\authorsnames|\oarg{comma separated list of superscripts}\marg{comma separated list of authors name(s)}: Authors names (if more than 1 author)
+% \end{itemize}
+%
+% Where \marg{authors names} is a comma separated list of authors in display order
+% and \oarg{superscripts} is an optional comma separated list of affiliation superscripts. 
+% If there are multiple superscripts for one author, put the set of superscripts within |{ }|.
+%
+% \begin{itemize}
+% \item
+%   \DescribeMacro{\authorsaffiliations}|\authorsaffiliations|\marg{comma separated list of affiliation(s)}:
+%   Author affiliation(s). Put each affiliation within |{ }| and separate each affiliation with a comma.
+% \end{itemize}
+%
+% \noindent \textbf{Examples:} \par
+% \noindent One author, one affiliation \par
+% |\authorsnames{Maggie C. Leonard}| \par
+% |\authorsaffiliations{{Department of Psychology, George Mason University}}| \par
+% \noindent One author, two affiliations \par
+% |\authorsnames{Andrew K. Jones-Willoughby}| \par
+% |\authorsaffiliations{{School of Psychology, University of Sydney},| \par
+% |{Center for Behavioral Neuroscience, American University}}| \par
+% \noindent Two authors, shared affiliation \par
+% |\authorsnames{Mackenzie J. Clement,Talia R. Cummings}| \par
+% |\authorsaffiliations{{College of Nursing, Michigan State University}}| \par
+% \noindent Two authors, different affiliations \par
+% |\authorsnames[1,2]{Wilhelm T. Webber,Latasha P. Jackson}| \par
+% |\authorsaffiliations{{Max Planck Institute for Human Development, Berlin, Germany},| \par
+% |{College of Education, University of Georgia}}| \par
+% \noindent Three or more authors, different affiliations \par
+% |\authorsnames[1,{2,3},1]{Savannah C. St. John, Fen-Lei Chang, Carlos O. Vásquez III}| \par
+% |\authorsaffiliations{{Education Testing Service, Princeton, New Jersey, ...},| \par
+% |{MRC Cognition and Brain Science Unit, Cambridge, England},| \par
+% |{Department of Psychology, University of Cambridge}}| \par
+%
+%
+% \subsubsection{Title Page Information}
+% \label{sec:titlepageinfo}
 % \begin{itemize}
 % \item \DescribeMacro{\course}|\course|\marg{course-number-name}: The
 %   course number and name (e.g. PSYC 3170: Clinical Psychology)
@@ -444,21 +505,6 @@ and the derived files           apa7.ins,
 % \item \DescribeMacro{\note}|\note|\marg{note-text}: Notation of
 %   manuscript date or other information desired beneath the
 %   affiliation line (not part of the APA 7th edition specification for title page)
-% \item \DescribeMacro{\journal}|\journal|\marg{journal-name}: Journal
-%   name or other note; typeset in the top left header of page 1
-%   (|jou| and |doc| modes only); to change the starting page to a
-%   number other than 1, insert the following line immediately after
-%   |\maketitle|:\\
-%   |\setcounter{page}|\marg{custom-page-number}
-% \item \DescribeMacro{\volume}|\volume|\marg{journal-volume}: Volume,
-%   number, pages; typeset in the top left header in |jou| and |doc|
-%   modes, underneath the content of |\journal|
-% \item \DescribeMacro{\ccoppy}|\ccoppy|\marg{copright-notice}:
-%   Copyright notice, etc.; typeset in the top right header of page 1
-%   (|jou| and |doc| modes only)
-% \item \DescribeMacro{\copnum}|\copnum|\marg{more-copyright-info}:
-%   Any additional text needed; typeset in the top right header in
-%   |jou| and |doc| modes, underneath the content of |\ccoppy|
 % \end{itemize}
 %
 % \subsection{Maketitle}
@@ -587,8 +633,6 @@ and the derived files           apa7.ins,
 %
 % \section{Known Limitations}
 % \begin{itemize}
-% \item There is a limit of six affiliations for authors (but an
-%   unlimited number of authors across those six affiliations).
 % \item The |APAenumerate| environment does not nest properly.
 % \end{itemize}
 %
@@ -1843,42 +1887,24 @@ and the derived files           apa7.ins,
 %===== apa.cls main declarations for title page contents =====
 
 \long\def\title#1{\long\def\@title{#1}}
-\long\def\author#1{\long\def\@author{#1}}
+\long\def\author#1{\authorsnames{#1}}
+\long\def\affiliation#1{\ClassWarning{apa7}{Deprecated: see documentation for \string\authorsaffiliations}\authorsaffiliations{#1}}
+\long\def\twoauthors#1#2{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{For multiple authors use \string\authorsnames}}
+\long\def\threeauthors#1#2#3{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{For multiple authors use \string\authorsnames}}
+\long\def\onetwoauthors#1#2#3{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{For multiple authors use \string\authorsnames}}
+\long\def\twooneauthors#1#2#3{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{For multiple authors use \string\authorsnames}}
+\long\def\fourauthors#1#2#3#4{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{For multiple authors use \string\authorsnames}}
+\long\def\fiveauthors#1#2#3#4#5{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{For multiple authors use \string\authorsnames}}
+\long\def\sixauthors#1#2#3#4#5#6{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{For multiple authors use \string\authorsnames}}
+\long\def\twoaffiliations#1#2{\ClassError{apa7}{Deprecated: see documentation for \string\authorsaffiliations}{For multiple affiliations use \string\authorsaffiliations}}
+\long\def\threeaffiliations#1#2#3{\ClassError{apa7}{Deprecated: see documentation for \string\authorsaffiliations}{For multiple affiliations use \string\authorsaffiliations}}
+\long\def\fouraffiliations#1#2#3#4{\ClassError{apa7}{Deprecated: see documentation for \string\authorsaffiliations}{For multiple affiliations use \string\authorsaffiliations}}
+\long\def\fiveaffiliations#1#2#3#4#5{\ClassError{apa7}{Deprecated: see documentation for \string\authorsaffiliations}{For multiple affiliations use \string\authorsaffiliations}}
+\long\def\sixaffiliations#1#2#3#4#5#6{\ClassError{apa7}{Deprecated: see documentation for \string\authorsaffiliations}{For multiple affiliations use \string\authorsaffiliations}}
 \long\def\course#1{\long\def\@course{#1}}
 \long\def\professor#1{\long\def\@professor{#1}}
 \long\def\duedate#1{\long\def\@duedate{#1}}
 \long\def\shorttitle#1{\long\def\@shorttitle{#1}}
-\long\def\twoauthors#1#2{\long\def\@authorOne{#1}\long\def\@authorTwo{#2}%
- \long\def\@author{#1}}
-\long\def\onetwoauthors#1#2#3{\long\def\@authorOne{#1}\long\def\@authorTwo{#2}%
- \long\def\@authorThree{#3}\long\def\@author{#1}}
-\long\def\twooneauthors#1#2#3{\long\def\@authorOne{#1}\long\def\@authorTwo{#2}%
- \long\def\@authorThree{#3}\long\def\@author{#1}\def\@twofirst{1}}
-\let\threeauthors=\onetwoauthors
-\long\def\fourauthors#1#2#3#4{\long\def\@authorOne{#1}\long\def\@authorTwo{#2}%
- \long\def\@authorThree{#3}\long\def\@authorFour{#4}\long\def\@author{#1}}
-\long\def\fiveauthors#1#2#3#4#5{\long\def\@authorOne{#1}\long\def\@authorTwo{#2}%%%%
- \long\def\@authorThree{#3}\long\def\@authorFour{#4}\long\def\@authorFive{#5}%    %%
- \long\def\@author{#1}} %%     2006/01/05 -- added as contributed by Aaron Geller %%
-\long\def\sixauthors#1#2#3#4#5#6{\long\def\@authorOne{#1}%                  %% thp 2006/01/05
- \long\def\@authorTwo{#2}\long\def\@authorThree{#3}\long\def\@authorFour{#4}%% thp 2006/01/05
- \long\def\@authorFive{#5}\long\def\@authorSix{#6}\long\def\@author{#1}}    %% thp 2006/01/05
-\long\def\affiliation#1{\long\def\@affil{#1}}
-\long\def\twoaffiliations#1#2{\long\def\@affilOne{#1}\long\def\@affilTwo{#2}%
-\long\def\@affil{#1}}
-\long\def\onetwoaffiliations#1#2#3{\long\def\@affilOne{#1}\long\def\@affilTwo{#2}%
- \long\def\@affilThree{#3}\long\def\@affil{#1}}
-\long\def\twooneaffiliations#1#2#3{\long\def\@affilOne{#1}\long\def\@affilTwo{#2}%
- \long\def\@affilThree{#3}\long\def\@affil{#1}}
-\let\threeaffiliations=\onetwoaffiliations
-\long\def\fouraffiliations#1#2#3#4{\long\def\@affilOne{#1}\long\def\@affilTwo{#2}%
- \long\def\@affilThree{#3}\long\def\@affilFour{#4}\long\def\@affil{#1}}
-\long\def\fiveaffiliations#1#2#3#4#5{\long\def\@affilOne{#1}\long\def\@affilTwo{#2}%%
- \long\def\@affilThree{#3}\long\def\@affilFour{#4}\long\def\@affilFive{#5}%        %%
- \long\def\@affil{#1}} %%     2006/01/05 -- added as contributed by Aaron Geller   %%
-\long\def\sixaffiliations#1#2#3#4#5#6{\long\def\@affilOne{#1}%           %% thp 2006/01/05
- \long\def\@affilTwo{#2}\long\def\@affilThree{#3}\long\def\@affilFour{#4}%% thp 2006/01/05
- \long\def\@affilFive{#5}\long\def\@affilSix{#6}\long\def\@affil{#1}}    %% thp 2006/01/05
 \long\def\note#1{\long\def\@note{#1}}
 \long\def\abstract#1{\long\def\@abstract{#1}}
 \long\def\keywords#1{\long\def\@keywords{#1}}
@@ -1888,52 +1914,147 @@ and the derived files           apa7.ins,
 \def\volume#1{\def\@vvolume{#1}}
 \def\ccoppy#1{\def\@ccoppy{#1}}
 \def\copnum#1{\def\@copnum{#1}}
-\def\@error@toomanyauthors{\ClassWarningNoLine{apa7}{More authors than affiliations defined}}
-\def\@error@toomanyaffils{\ClassWarningNoLine{apa7}{More affiliations than authors defined}}
+
+% Combined code from https://tex.stackexchange.com/questions/297507/how-to-apply-a-do-function-to-two-lists and 
+% https://www.dickimaw-books.com/latex/admin/html/exercises/oxfordcomma.shtml
+
+% Create etoolbox lists for multiple authors and affiliations
+\newcommand*\listauthors{}
+\newcommand*\listsuperscripts{}
+\newcommand*\listaffiliations{}
+
+\newcommand*{\authorsnames}[2][]{
+  \def\def@multipleauthors{\@multipleauthorsmode} %
+  \renewcommand*\listauthors{}
+  \renewcommand*\listsuperscripts{}
+  \newcounter{NumberOfAuthors}
+  \newcounter{NumberOfSuperscripts}
+  \forcsvlist{\stepcounter{NumberOfAuthors}\listadd\listauthors}{#2}
+  \forcsvlist{\stepcounter{NumberOfSuperscripts}\listadd\listsuperscripts}{#1}
+  }
+  
+  \newcommand*{\authorsaffiliations}[1]{
+  \def\def@multipleaffils{\@multipleaffilsmode} %
+  \renewcommand*\listaffiliations{}
+  \newcounter{NumberOfAffiliations}
+  \forcsvlist{\stepcounter{NumberOfAffiliations}\listadd\listaffiliations}{#1}
+  }
+
+\makeatletter
+  \catcode`\|=3
+  
+\def\looptwo#1#2{%
+    \edef\tmp{\noexpand\xtwo%
+      \unexpanded\expandafter{#1}\relax  % no added delimiter here
+      \unexpanded\expandafter{#2}\relax  % no added delimiter here
+    } \tmp%
+  }%
+  
+\def\xtwo#1|#2\relax#3|#4\relax{%
+    \dotwo{#1}{#3}%
+    \def\tmp{#2}%
+    \ifx\empty\tmp%
+      \expandafter\@gobble%
+    \else%
+      \expandafter\@firstofone%
+    \fi%
+    {\xtwo#2\relax#4\relax}%
+  }%
+
+  \catcode`\|=12
+\makeatother
+
+\newcommand*{\dotwo}[2]{}
+
+\newcommand*{\authorsep}{}%
+\newcommand*{\lastauthor}{}%
+\newcommand*{\prelastauthor}{}%
+\newcommand*{\prelastauthorsep}{}%
+
+\newcommand{\displayauthors}{%
+  \renewcommand*{\authorsep}{}%
+  \renewcommand*{\lastauthor}{}%
+  \renewcommand*{\prelastauthor}{}%
+  \renewcommand*{\prelastauthorsep}{}%
+  \ifnum\value{NumberOfSuperscripts}=0% If no superscripts are specified, print authors without superscripts.
+	\renewcommand*{\do}[1]{%
+      \authorsep%
+    \lastauthor%
+    \renewcommand{\lastauthor}{%
+      \renewcommand{\authorsep}{, 
+        \renewcommand*{\prelastauthorsep}{,}}%
+      \renewcommand{\prelastauthor}{\prelastauthorsep\ and }%
+      ##1%
+    }%
+      }%
+    \dolistloop{\listauthors}%
+  \else
+    \renewcommand*{\dotwo}[2]{%
+    \authorsep%
+    \lastauthor%
+    \renewcommand{\lastauthor}{%
+      \renewcommand{\authorsep}{, 
+        \renewcommand*{\prelastauthorsep}{,}}%
+      \renewcommand{\prelastauthor}{\prelastauthorsep\ and }%
+      ##1\textsuperscript{##2}%
+    }%
+  }%
+  \looptwo\listauthors\listsuperscripts%
+  \fi
+  \prelastauthor \lastauthor%
+}
+
+\newcommand{\displayaffiliations}{%
+  \ifnum\value{NumberOfSuperscripts}=0% If no superscripts are specified, print affiliations without superscripts.
+  \renewcommand*{\do}[1]{%
+      ##1\\%
+  }%
+  \else
+  \newcounter{AffiliationNumber}
+  \renewcommand*{\do}[1]{%
+      \stepcounter{AffiliationNumber}
+      \textsuperscript{\arabic{AffiliationNumber}}##1\\%
+  }%
+  \fi
+  \dolistloop{\listaffiliations}%
+}
+
+\makeatletter
+
 \def\check@author{%
- \@ifundefined{@author}{%
-  \ClassWarningNoLine{apa7}{Author not defined}\def\@author{Author}}{}
+ \@ifundefined{def@multipleauthors}{%
+  \ClassWarningNoLine{apa7}{Author not defined}\authorsnames{Author}}{}
  \@ifundefined{@title}{%
   \ClassWarningNoLine{apa7}{Title not defined}\def\@title{Title}}{}
- \@ifundefined{@affil}{%
-  \ClassWarningNoLine{apa7}{Affiliation not defined}\def\@affil{Affiliation}}{}
-   \@ifundefined{def@stu}{%
+ \@ifundefined{def@multipleaffils}{%
+  \ClassWarningNoLine{apa7}{Affiliation not defined}\authorsaffiliations{Affiliation}}{}
+   \@ifundefined{def@stu}{% man mode
    	\@ifundefined{@shorttitle}{%
  	 \ClassWarningNoLine{apa7}{Short title not defined}\def\@shorttitle{INSERT SHORTTITLE COMMAND IN PREAMBLE}}{}
  	\@ifundefined{@abstract}{%
   	\ClassWarningNoLine{apa7}{Abstract not defined}}{}
  	\@ifundefined{@keywords}{%
  	 \ClassInfo{apa7}{Keywords not defined}}{}
-	 }{
+	 }{ % stu mode
 	 \@ifundefined{@course}{%
- 	 \ClassWarningNoLine{apa7}{Course title not defined}}{}
+ 	 \ClassWarningNoLine{apa7}{Course title not defined}\def\@course{Course Title}}{}
  	\@ifundefined{@professor}{%
-  	\ClassWarningNoLine{apa7}{Professor not defined}}{}
+  	\ClassWarningNoLine{apa7}{Professor not defined}\def\@professor{Professor Name}}{}
  	\@ifundefined{@duedate}{%
- 	 \ClassInfo{apa7}{Due date not defined}}{}
+ 	 \ClassWarningNoLine{apa7}{Due date not defined}\def\@duedate{Due Date}}{}
 	 \@ifundefined{@shorttitle}{%
-         \def\@shorttitle{}}{}
+         \def\@shorttitle{}}{}%
 	 }
- \@ifundefined{@authorSix}{%                                   % -- thp 2006/01/05
-  \@ifundefined{@authorFive}{%                                 % -- thp 2006/01/05
-   \@ifundefined{@authorFour}{%
-    \@ifundefined{@authorThree}{%
-     \@ifundefined{@authorTwo}{%
-     }{\@ifundefined{@affilTwo}{\@error@toomanyauthors}{}}
-    }{\@ifundefined{@affilThree}{\@error@toomanyauthors}{}}
-   }{\@ifundefined{@affilFour}{\@error@toomanyauthors}{}}
-  }{\@ifundefined{@affilFive}{\@error@toomanyauthors}{}}       % -- thp 2006/01/05
- }{\@ifundefined{@affilSix}{\@error@toomanyauthors}{}}         % -- thp 2006/01/05
- \@ifundefined{@affilSix}{%                                    % -- thp 2006/01/05
-  \@ifundefined{@affilFive}{%                                  % -- thp 2006/01/05
-   \@ifundefined{@affilFour}{%
-    \@ifundefined{@affilThree}{%
-     \@ifundefined{@affilTwo}{%
-     }{\@ifundefined{@authorTwo}{\@error@toomanyaffils}{}}
-    }{\@ifundefined{@authorThree}{\@error@toomanyaffils}{}}
-   }{\@ifundefined{@authorFour}{\@error@toomanyaffils}{}}
-  }{\@ifundefined{@authorFive}{\@error@toomanyaffils}{}}       % -- thp 2006/01/05
- }{\@ifundefined{@authorSix}{\@error@toomanyaffils}{}}         % -- thp 2006/01/05
+	 \@ifundefined{def@multipleauthors}{}{%
+	   \ifnum\value{NumberOfSuperscripts}=0%
+	   	% do nothing. If no superscripts are specified, print authors and affiliations without superscripts.
+	   \else \ifnum\value{NumberOfAuthors}=\value{NumberOfSuperscripts}%
+	         % do nothing
+	         \else 
+	       		\ClassError{apa7}{Number of Authors does not match number of Superscripts}{Please provide an equal number of authors and superscripts.}
+		 \fi
+	   \fi
+          }%
 }
 
 %==== Automatic figure size and orientation determination ====
@@ -2428,91 +2549,24 @@ and the derived files           apa7.ins,
 
 
   \begin{center}
-  \vspace*{0.5in}
+  
 %  \makebox[\linewidth][l]{\rheadname\hspace{0.1in}\MakeUppercase{\r@headr}}\\ %thp090298
 
-  \vspace*{1in}
+  \vspace*{4\baselineskip}
   \textbf\@title%
   \ifapamodeman{%
     \@ifundefined{def@noextraspace}{%
-      \vspace{0.25in}\\
+      \vspace{\baselineskip}\\
     }{}
   }{%
-    \vspace{0.25in}\\
+    \vspace{\baselineskip}\\
   }
 \@ifundefined{def@stu}{ %Professional manuscript
   \@ifundefined{apaSeven@maskauthoridentity}{%  BDB
+      
+      \displayauthors \\
+      \displayaffiliations
 
-      \@ifundefined{@authorTwo}{
-      \@author \\
-
-      \@affil \vspace{0.25in} \\ }{
-      \@ifundefined{@authorThree}{
-      \@authorOne \\
-
-      \@affilOne \vspace{0.2in} \\
-      \@authorTwo \\
-
-      \@affilTwo \vspace{0.25in} \\ }{
-      \@ifundefined{@authorFour}{
-      \@authorOne \\
-
-      \@affilOne \vspace{0.2in} \\
-      \@authorTwo \\
-
-      \@affilTwo \vspace{0.2in} \\
-      \@authorThree \\
-
-      \@affilThree \vspace{0.25in} \\ }{
-      \@ifundefined{@authorFive}{       %% 2006/01/05 added as contributed by Aaron Geller
-      \@authorOne \\
-
-      \@affilOne \vspace{0.2in} \\
-      \@authorTwo \\
-
-      \@affilTwo \vspace{0.2in} \\
-      \@authorThree \\
-
-      \@affilThree \vspace{0.2in} \\
-      \@authorFour \\
-
-      \@affilFour \vspace{0.25in} \\ }{ %% 2006/01/05 beginning of Aaron Geller contribution
-      \@ifundefined{@authorSix}{ %% -- thp 2006/01/05
-      \@authorOne \\
-
-      \@affilOne \vspace{0.2in} \\
-      \@authorTwo \\
-
-      \@affilTwo \vspace{0.2in} \\
-      \@authorThree \\
-
-      \@affilThree \vspace{0.2in} \\
-      \@authorFour \\
-
-      \@affilFour \vspace{0.2in} \\ %% thp corrected distance to non-final value of 0.2in
-      \@authorFive \\
-
-      \@affilFive \vspace{0.25in} \\ }{%% 2006/01/05 end of Aaaron Geller contribution
-    %% --- thp 2006/01/05 beginning of six-author display
-      \@authorOne \\
-
-      \@affilOne \vspace{0.2in} \\
-      \@authorTwo \\
-
-      \@affilTwo \vspace{0.2in} \\
-      \@authorThree \\
-
-      \@affilThree \vspace{0.2in} \\
-      \@authorFour \\
-
-      \@affilFour \vspace{0.2in} \\
-      \@authorFive \\
-
-      \@affilFive \vspace{0.2in} \\
-      \@authorSix \\
-
-      \@affilSix \vspace{0.25in} \\ }}}}}
-    %% --- thp 2006/01/05 end of six-author display
       \@ifundefined{@note}
        {\vspace*{\baselineskip} }
        {\@note}
@@ -2534,9 +2588,10 @@ and the derived files           apa7.ins,
        }
   }{%  mask author identity -- show nothing in the author or author note space
   }}{% Student Manuscript
-      \@author \\
-
-      \@affil \\ 
+      \displayauthors \\
+      
+      \displayaffiliations
+      
       \@course \\ 
       \@professor \\ 
       \@duedate \\ 
@@ -2706,56 +2761,10 @@ and the derived files           apa7.ins,
 \def\r@headr{\protect\MakeUppercase{\protect\scriptsize\@shorttitle}}% BDB
 %%%%%%%%%%%%%%%%%%%%%%%\def\shorttitle#1{\def\r@headr{\protect\MakeUppercase{\protect\scriptsize #1}}}% BDB
 
-\def\put@one@authaffil#1#2{%
-  \parbox[t]{\textwidth}{\begin{center}{\large #1\vspace{0in}}%
-                        {\\ #2\vspace{0.05in}\\}\end{center}}}
-
-\newsavebox\auone@box
-\newsavebox\autwo@box
-\newsavebox\autot@box
-\newlength\auone@boxwidth
-\newlength\autwo@boxwidth
-\newlength\autot@boxwidth
-
-\def\default@d@authaffil#1#2#3#4{%
-        \parbox[t]{\columnwidth}{\begin{center}{\large #1\vspace{0in}}%
-                                {\\ #2\vspace{0.05in}\\}\end{center}}%
-        \parbox[t]{\columnwidth}{\begin{center}{\large #3\vspace{0in}}%
-                                {\\ #4\vspace{0.05in}\\}\end{center}}}
-
-\def\uneven@d@authaffil#1#2#3#4{%
-     \hfill\parbox[t]{\auone@boxwidth}{\begin{center}{\large #1\vspace{0in}}%
-                                      {\\ #2\vspace{0.05in}\\}\end{center}}\hfill\hfill%
-           \parbox[t]{\autwo@boxwidth}{\begin{center}{\large #3\vspace{0in}}%
-                                      {\\ #4\vspace{0.05in}\\}\end{center}}\hfill}
-
-\def\put@two@authaffil#1#2#3#4{%
-     \let\disp@authaffil\default@d@authaffil
-     \sbox\auone@box{\begin{tabular}{c}\large #1\\ #2\end{tabular}}
-     \settowidth{\auone@boxwidth}{\usebox\auone@box}
-     \sbox\autwo@box{\begin{tabular}{c}\large #3\\ #4\end{tabular}}
-     \settowidth{\autwo@boxwidth}{\usebox\autwo@box}
-     \ifdim\auone@boxwidth<1.25\columnwidth
-      \ifdim\autwo@boxwidth<1.25\columnwidth
-       \sbox\autot@box{\usebox\auone@box\hspace{0.4in}\usebox\autwo@box}
-       \settowidth{\autot@boxwidth}{\usebox\autot@box}
-       \ifdim\autot@boxwidth<\textwidth
-        \let\disp@authaffil\uneven@d@authaffil
-       \fi
-      \fi
-     \fi
-     \ifdim\auone@boxwidth<\columnwidth
-      \ifdim\autwo@boxwidth<\columnwidth
-       \let\disp@authaffil\default@d@authaffil
-      \fi
-     \fi
-     \disp@authaffil{#1}{#2}{#3}{#4}
-}
-
 \def\maketitle{
  \check@author
  \@ifundefined{r@headr}{\def\r@headr{\protect\MakeUppercase{\protect\scriptsize\@title}}}{}
- \@ifundefined{r@headl}{\def\r@headl{\protect\MakeUppercase{\protect\scriptsize\@author}}}{}
+ \@ifundefined{r@headl}{\def\r@headl{ADD \\LEFTHEADER COMMAND}}{}
 
 \twocolumn[  % anything appearing within the brackets is set in one-column mode
   \vspace{0.03in}
@@ -2766,42 +2775,10 @@ and the derived files           apa7.ins,
 
   \@ifundefined{apaSeven@maskauthoridentity}{%  BDB
 
-      \@ifundefined{@authorTwo}{
-    % one author-affiliation
-      \put@one@authaffil{\@author}{\@affil}}{
-      \@ifundefined{@authorThree}{
-    % two authors-affiliations
-      \put@two@authaffil{\@authorOne}{\@affilOne}{\@authorTwo}{\@affilTwo}}{
-      \@ifundefined{@authorFour}{
-    % three authors-affiliations
-      \@ifundefined{@twofirst}{
-    % first one, then two
-      \put@one@authaffil{\@authorOne}{\@affilOne}\vspace{-0.15in}\\
-      \put@two@authaffil{\@authorTwo}{\@affilTwo}{\@authorThree}{\@affilThree}
-      }{
-    % first two, then one
-      \put@two@authaffil{\@authorOne}{\@affilOne}{\@authorTwo}{\@affilTwo}\vspace{-0.15in}\\
-      \put@one@authaffil{\@authorThree}{\@affilThree}
-      }}{
-      \@ifundefined{@authorFive}{ % 2006/01/05 as contributed by Aaron Geller
-    % four authors-affiliations
-      \put@two@authaffil{\@authorOne}{\@affilOne}{\@authorTwo}{\@affilTwo}\vspace{-0.15in}\\
-      \put@two@authaffil{\@authorThree}{\@affilThree}{\@authorFour}{\@affilFour}
-      }{                          % 2006/01/05 beginning of Aaron Geller contribution
-      \@ifundefined{@authorSix}{ % -- thp 2006/01/05
-    % five authors-affiliations
-      \put@two@authaffil{\@authorOne}{\@affilOne}{\@authorTwo}{\@affilTwo}\vspace{-0.15in}\\
-      \put@two@authaffil{\@authorThree}{\@affilThree}{\@authorFour}{\@affilFour}%
-      \vspace{-0.15in}\\ % thp added negative vertical space
-      \put@one@authaffil{\@authorFive}{\@affilFive}
-      }{                          % 2006/01/05 end of Aaron Geller contribution
-    % six authors-affiliations
-    %% --- thp 2006/01/05 beginning of six-author display
-      \put@two@authaffil{\@authorOne}{\@affilOne}{\@authorTwo}{\@affilTwo}\vspace{-0.15in}\\
-      \put@two@authaffil{\@authorThree}{\@affilThree}{\@authorFour}{\@affilFour}\vspace{-0.15in}\\
-      \put@two@authaffil{\@authorFive}{\@affilFive}{\@authorSix}{\@affilSix}
-    %% --- thp 2006/01/05 end of six-author display
-      }}}}}
+	\parbox[t]{\textwidth}{\begin{center}{\large \displayauthors\vspace{0in}}%
+
+	{\displayaffiliations\vspace{0.05in}}\end{center}}
+	
       \@ifundefined{@note}
        {\vspace{0.07in}}
        {\vspace{0.07in}\\ {\large\@note\vspace{0.07in}}}
@@ -3062,87 +3039,9 @@ and the derived files           apa7.ins,
   \vspace{0.3in}
   \@ifundefined{apaSeven@maskauthoridentity}{%  BDB
 
-      \@ifundefined{@authorTwo}{
-    % one author-affiliation
-      {\Large \@author} \\
+      {\Large \displayauthors} \\
 
-      \@affil \vspace{0.1in} \\ }{
-      \@ifundefined{@authorThree}{
-    % two authors-affiliations
-      {\Large \@authorOne} \\
-
-      \@affilOne \vspace{0.1in} \\
-      {\Large \@authorTwo}\\
-
-      \@affilTwo \vspace{0.1in} \\ }{
-      \@ifundefined{@authorFour}{
-    % three authors-affiliations
-      {\Large \@authorOne} \\
-
-      \@affilOne \vspace{0.1in} \\
-      {\Large \@authorTwo}\\
-
-      \@affilTwo \vspace{0.1in} \\
-      {\Large \@authorThree}\\
-
-      \@affilThree \vspace{0.1in} \\ }{
-      \@ifundefined{@authorFive}{ %% 2006/01/05 added as contributed by Aaron Geller
-    % four authors-affiliations
-      {\Large \@authorOne} \\
-
-      \@affilOne \vspace{0.1in} \\
-      {\Large \@authorTwo}\\
-
-      \@affilTwo \vspace{0.1in} \\
-      {\Large \@authorThree}\\
-
-      \@affilThree \vspace{0.1in} \\
-      {\Large \@authorFour}\\
-
-      \@affilFour \vspace{0.1in} \\ }{  %%% 2006/01/05 beginning of Aaron Geller contribution
-      \@ifundefined{@authorSix}{ %% -- thp 2006/01/05
-    % five authors-affiliations
-      {\Large \@authorOne} \\
-
-      \@affilOne \vspace{0.1in} \\
-      {\Large \@authorTwo}\\
-
-      \@affilTwo \vspace{0.1in} \\
-      {\Large \@authorThree}\\
-
-      \@affilThree \vspace{0.1in} \\
-      {\Large \@authorFour}\\
-
-      \@affilFour \vspace{0.1in} \\
-      {\Large \@authorFive}\\
-
-      \@affilFive \vspace{0.1in} \\ }{  %%% 2006/01/05 end of Aaron Geller contribution
-    % six authors-affiliations
-    %% --- thp 2006/01/05 beginning of six-author display
-      {\Large \@authorOne} \\
-
-      \@affilOne \vspace{0.1in} \\
-      {\Large \@authorTwo}\\
-
-      \@affilTwo \vspace{0.1in} \\
-      {\Large \@authorThree}\\
-
-      \@affilThree \vspace{0.1in} \\
-      {\Large \@authorFour}\\
-
-      \@affilFour \vspace{0.1in} \\
-      {\Large \@authorFive}\\
-
-      \@affilFive \vspace{0.1in} \\
-      {\Large \@authorSix}\\
-
-      \@affilSix \vspace{0.1in} \\ }
-    %% --- thp 2006/01/05 end of six-author display
-    }}}}
-    %
-      \@ifundefined{@note}
-       {\vspace*{\baselineskip} }
-       {\@note\vspace{0.2in}}
+      \displayaffiliations \vspace{0.1in}
 
   }{%  mask author identity -- show nothing in the author note space
   }
@@ -3480,8 +3379,8 @@ and the derived files           apa7.ins,
 
 \title{Sample APA-Style Document Using the \textsf{apa7} Package}
 
-\author{Daniel A. Weiss}
-\affiliation{A University Somewhere}
+\authorsnames{Daniel A. Weiss}
+\authorsaffiliations{A University Somewhere}
 
 \leftheader{Weiss}
 
@@ -3597,8 +3496,8 @@ skill in interpreting the results for the masses.
 \title{Sample APA-Style Document Using the \textsf{apa7} Package}
 \shorttitle{Sample Document}
 
-\author{Daniel A. Weiss}
-\affiliation{A University Somewhere}
+\authorsnames{Daniel A. Weiss}
+\authorsaffiliations{A University Somewhere}
 
 \leftheader{Weiss}
 
