@@ -247,7 +247,7 @@ and the derived files           apa7.ins,
 %
 % \changes{v1.09}{2020/06/19}{Fixed note command (will no longer print "Author Note" header).}
 %
-% \changes{v2.01}{2020/07/18}{Fixed spacing for on Title Page for title and author. Re-wrote author and affiliation to be APA7 compliant.}
+% \changes{v2.01}{2020/07/18}{Re-wrote author and affiliation to be APA7 compliant. Fixed spacing for on Title Page for title and author. }
 %
 % \begin{abstract}
 %   The \textit{Publication Manual} of the American Psychological
@@ -277,6 +277,13 @@ and the derived files           apa7.ins,
 % between APA requirements and the output of this class.  However, it
 % is the sole responsibility of the user to ensure compliance with
 % specific journal submission requirements!
+%
+% \section{\textsf{apa7} Version 2.01 Changes to Authors and Affilitions}
+% The way that authors and affiliations work has been changed in 
+% version 2.01 to be APA 7th edition compliant. 
+% This change will require updating any multiple author and/or 
+% multiple affiliation documents to use the new |\authorsnames| and
+% |\authorsaffiliations| commands (See Section~\ref{sec:authorsaffiliations}).
 %
 % \section{Usage}
 % \label{sec:usage}
@@ -626,8 +633,6 @@ and the derived files           apa7.ins,
 %
 % \section{Known Limitations}
 % \begin{itemize}
-% \item There is a limit of six affiliations for authors (but an
-%   unlimited number of authors across those six affiliations).
 % \item The |APAenumerate| environment does not nest properly.
 % \end{itemize}
 %
@@ -1884,18 +1889,18 @@ and the derived files           apa7.ins,
 \long\def\title#1{\long\def\@title{#1}}
 \long\def\author#1{\authorsnames{#1}}
 \long\def\affiliation#1{\ClassWarning{apa7}{Deprecated: see documentation for \string\authorsaffiliations}\authorsaffiliations{#1}}
-\long\def\twoauthors#1#2{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{Use \string\authorsnames}}
-\long\def\threeauthors#1#2#3{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{Use \string\authorsnames}}
-\long\def\onetwoauthors#1#2#3{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{Use \string\authorsnames}}
-\long\def\twooneauthors#1#2#3{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{Use \string\authorsnames}}
-\long\def\fourauthors#1#2#3#4{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{Use \string\authorsnames}}
-\long\def\fiveauthors#1#2#3#4#5{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{Use \string\authorsnames}}
-\long\def\sixauthors#1#2#3#4#5#6{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{Use \string\authorsnames}}
-\long\def\twoaffiliations#1#2{\ClassError{apa7}{Deprecated: see documentation for \string\authorsaffiliations}{Use \string\authorsaffiliations}}
-\long\def\threeaffiliations#1#2#3{\ClassError{apa7}{Deprecated: see documentation for \string\authorsaffiliations}{Use \string\authorsaffiliations}}
-\long\def\fouraffiliations#1#2#3#4{\ClassError{apa7}{Deprecated: see documentation for \string\authorsaffiliations}{Use \string\authorsaffiliations}}
-\long\def\fiveaffiliations#1#2#3#4#5{\ClassError{apa7}{Deprecated: see documentation for \string\authorsaffiliations}{Use \string\authorsaffiliations}}
-\long\def\sixaffiliations#1#2#3#4#5#6{\ClassError{apa7}{Deprecated: see documentation for \string\authorsaffiliations}{Use \string\authorsaffiliations}}
+\long\def\twoauthors#1#2{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{For multiple authors use \string\authorsnames}}
+\long\def\threeauthors#1#2#3{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{For multiple authors use \string\authorsnames}}
+\long\def\onetwoauthors#1#2#3{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{For multiple authors use \string\authorsnames}}
+\long\def\twooneauthors#1#2#3{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{For multiple authors use \string\authorsnames}}
+\long\def\fourauthors#1#2#3#4{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{For multiple authors use \string\authorsnames}}
+\long\def\fiveauthors#1#2#3#4#5{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{For multiple authors use \string\authorsnames}}
+\long\def\sixauthors#1#2#3#4#5#6{\ClassError{apa7}{Deprecated: see documentation for \string\authorsnames}{For multiple authors use \string\authorsnames}}
+\long\def\twoaffiliations#1#2{\ClassError{apa7}{Deprecated: see documentation for \string\authorsaffiliations}{For multiple affiliations use \string\authorsaffiliations}}
+\long\def\threeaffiliations#1#2#3{\ClassError{apa7}{Deprecated: see documentation for \string\authorsaffiliations}{For multiple affiliations use \string\authorsaffiliations}}
+\long\def\fouraffiliations#1#2#3#4{\ClassError{apa7}{Deprecated: see documentation for \string\authorsaffiliations}{For multiple affiliations use \string\authorsaffiliations}}
+\long\def\fiveaffiliations#1#2#3#4#5{\ClassError{apa7}{Deprecated: see documentation for \string\authorsaffiliations}{For multiple affiliations use \string\authorsaffiliations}}
+\long\def\sixaffiliations#1#2#3#4#5#6{\ClassError{apa7}{Deprecated: see documentation for \string\authorsaffiliations}{For multiple affiliations use \string\authorsaffiliations}}
 \long\def\course#1{\long\def\@course{#1}}
 \long\def\professor#1{\long\def\@professor{#1}}
 \long\def\duedate#1{\long\def\@duedate{#1}}
