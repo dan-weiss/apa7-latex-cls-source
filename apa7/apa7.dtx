@@ -2712,52 +2712,6 @@ and the derived files           apa7.ins,
 \def\r@headr{\protect\MakeUppercase{\protect\scriptsize\@shorttitle}}% BDB
 %%%%%%%%%%%%%%%%%%%%%%%\def\shorttitle#1{\def\r@headr{\protect\MakeUppercase{\protect\scriptsize #1}}}% BDB
 
-\def\put@one@authaffil#1#2{%
-  \parbox[t]{\textwidth}{\begin{center}{\large #1\vspace{0in}}%
-                        {\\ #2\vspace{0.05in}\\}\end{center}}}
-
-\newsavebox\auone@box
-\newsavebox\autwo@box
-\newsavebox\autot@box
-\newlength\auone@boxwidth
-\newlength\autwo@boxwidth
-\newlength\autot@boxwidth
-
-\def\default@d@authaffil#1#2#3#4{%
-        \parbox[t]{\columnwidth}{\begin{center}{\large #1\vspace{0in}}%
-                                {\\ #2\vspace{0.05in}\\}\end{center}}%
-        \parbox[t]{\columnwidth}{\begin{center}{\large #3\vspace{0in}}%
-                                {\\ #4\vspace{0.05in}\\}\end{center}}}
-
-\def\uneven@d@authaffil#1#2#3#4{%
-     \hfill\parbox[t]{\auone@boxwidth}{\begin{center}{\large #1\vspace{0in}}%
-                                      {\\ #2\vspace{0.05in}\\}\end{center}}\hfill\hfill%
-           \parbox[t]{\autwo@boxwidth}{\begin{center}{\large #3\vspace{0in}}%
-                                      {\\ #4\vspace{0.05in}\\}\end{center}}\hfill}
-
-\def\put@two@authaffil#1#2#3#4{%
-     \let\disp@authaffil\default@d@authaffil
-     \sbox\auone@box{\begin{tabular}{c}\large #1\\ #2\end{tabular}}
-     \settowidth{\auone@boxwidth}{\usebox\auone@box}
-     \sbox\autwo@box{\begin{tabular}{c}\large #3\\ #4\end{tabular}}
-     \settowidth{\autwo@boxwidth}{\usebox\autwo@box}
-     \ifdim\auone@boxwidth<1.25\columnwidth
-      \ifdim\autwo@boxwidth<1.25\columnwidth
-       \sbox\autot@box{\usebox\auone@box\hspace{0.4in}\usebox\autwo@box}
-       \settowidth{\autot@boxwidth}{\usebox\autot@box}
-       \ifdim\autot@boxwidth<\textwidth
-        \let\disp@authaffil\uneven@d@authaffil
-       \fi
-      \fi
-     \fi
-     \ifdim\auone@boxwidth<\columnwidth
-      \ifdim\autwo@boxwidth<\columnwidth
-       \let\disp@authaffil\default@d@authaffil
-      \fi
-     \fi
-     \disp@authaffil{#1}{#2}{#3}{#4}
-}
-
 \def\maketitle{
  \check@author
  \@ifundefined{r@headr}{\def\r@headr{\protect\MakeUppercase{\protect\scriptsize\@title}}}{}
@@ -2772,42 +2726,10 @@ and the derived files           apa7.ins,
 
   \@ifundefined{apaSeven@maskauthoridentity}{%  BDB
 
-      \@ifundefined{@authorTwo}{
-    % one author-affiliation
-      \put@one@authaffil{\@author}{\@affil}}{
-      \@ifundefined{@authorThree}{
-    % two authors-affiliations
-      \put@two@authaffil{\@authorOne}{\@affilOne}{\@authorTwo}{\@affilTwo}}{
-      \@ifundefined{@authorFour}{
-    % three authors-affiliations
-      \@ifundefined{@twofirst}{
-    % first one, then two
-      \put@one@authaffil{\@authorOne}{\@affilOne}\vspace{-0.15in}\\
-      \put@two@authaffil{\@authorTwo}{\@affilTwo}{\@authorThree}{\@affilThree}
-      }{
-    % first two, then one
-      \put@two@authaffil{\@authorOne}{\@affilOne}{\@authorTwo}{\@affilTwo}\vspace{-0.15in}\\
-      \put@one@authaffil{\@authorThree}{\@affilThree}
-      }}{
-      \@ifundefined{@authorFive}{ % 2006/01/05 as contributed by Aaron Geller
-    % four authors-affiliations
-      \put@two@authaffil{\@authorOne}{\@affilOne}{\@authorTwo}{\@affilTwo}\vspace{-0.15in}\\
-      \put@two@authaffil{\@authorThree}{\@affilThree}{\@authorFour}{\@affilFour}
-      }{                          % 2006/01/05 beginning of Aaron Geller contribution
-      \@ifundefined{@authorSix}{ % -- thp 2006/01/05
-    % five authors-affiliations
-      \put@two@authaffil{\@authorOne}{\@affilOne}{\@authorTwo}{\@affilTwo}\vspace{-0.15in}\\
-      \put@two@authaffil{\@authorThree}{\@affilThree}{\@authorFour}{\@affilFour}%
-      \vspace{-0.15in}\\ % thp added negative vertical space
-      \put@one@authaffil{\@authorFive}{\@affilFive}
-      }{                          % 2006/01/05 end of Aaron Geller contribution
-    % six authors-affiliations
-    %% --- thp 2006/01/05 beginning of six-author display
-      \put@two@authaffil{\@authorOne}{\@affilOne}{\@authorTwo}{\@affilTwo}\vspace{-0.15in}\\
-      \put@two@authaffil{\@authorThree}{\@affilThree}{\@authorFour}{\@affilFour}\vspace{-0.15in}\\
-      \put@two@authaffil{\@authorFive}{\@affilFive}{\@authorSix}{\@affilSix}
-    %% --- thp 2006/01/05 end of six-author display
-      }}}}}
+	\parbox[t]{\textwidth}{\begin{center}{\large \displayauthors\vspace{0in}}%
+
+	{\displayaffiliations\vspace{0.05in}}\end{center}}
+	
       \@ifundefined{@note}
        {\vspace{0.07in}}
        {\vspace{0.07in}\\ {\large\@note\vspace{0.07in}}}
