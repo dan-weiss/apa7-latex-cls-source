@@ -4,11 +4,11 @@
 %                                                                           %
 %    CHANGE THESE VALUES WITH EACH NEW RELEASE:                             %
 %                                                                           %
-%<class>\ProvidesClass{apa7}[2020/07/18 v2.01 APA formatting (7th edition)]
+%<class>\ProvidesClass{apa7}[2020/08/02 v2.02 APA formatting (7th edition)]
 %                                                                           %
 %<*internal>                                                                %
-\def\apaSevenVersionDate{2020/07/18}
-\def\apaSevenVersionNumber{2.01}
+\def\apaSevenVersionDate{2020/08/02}
+\def\apaSevenVersionNumber{2.02}
 %                                                                           %
 %                                                                           %
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -248,6 +248,8 @@ and the derived files           apa7.ins,
 % \changes{v1.09}{2020/06/19}{Fixed note command (will no longer print "Author Note" header).}
 %
 % \changes{v2.01}{2020/07/18}{Re-wrote author and affiliation to be APA7 compliant. Fixed spacing on Title Page for title and author. }
+%
+% \changes{v2.02}{2020/08/02}{Added the "and" in multiple author list to translation files. }
 %
 % \begin{abstract}
 %   The \textit{Publication Manual} of the American Psychological
@@ -1438,6 +1440,7 @@ and the derived files           apa7.ins,
 % Based on handling of the same issue in apacite.sty
 
 % First define the default American English macros in case no external file is present or needed
+\def\lastauthorseparator{and}
 \def\acksname{Author Note}
 \def\keywordname{Keywords}
 \def\notesname{Footnotes}
@@ -1983,7 +1986,7 @@ and the derived files           apa7.ins,
     \renewcommand{\lastauthor}{%
       \renewcommand{\authorsep}{, 
         \renewcommand*{\prelastauthorsep}{,}}%
-      \renewcommand{\prelastauthor}{\prelastauthorsep\ and }%
+      \renewcommand{\prelastauthor}{\prelastauthorsep\ \lastauthorseparator\ }% Terminated commands with \ to preserve following space
       ##1%
     }%
       }%
@@ -1995,7 +1998,7 @@ and the derived files           apa7.ins,
     \renewcommand{\lastauthor}{%
       \renewcommand{\authorsep}{, 
         \renewcommand*{\prelastauthorsep}{,}}%
-      \renewcommand{\prelastauthor}{\prelastauthorsep\ and }%
+      \renewcommand{\prelastauthor}{\prelastauthorsep\ \lastauthorseparator\ }% Terminated commands with \ to preserve following space
       ##1\textsuperscript{##2}%
     }%
   }%
@@ -3652,8 +3655,9 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7american.txt}
 %    \begin{macrocode}
 %<*american>
-\ProvidesFile{APA7american.txt}[2019/12/29 v1.00 apa7 configuration for American English]
+\ProvidesFile{APA7american.txt}[2020/08/02 v1.01 apa7 configuration for American English]
 
+\renewcommand{\lastauthorseparator}{and}
 \renewcommand{\acksname}{Author Note}
 \renewcommand{\keywordname}{Keywords}
 \renewcommand{\notesname}{Footnotes}
@@ -3667,8 +3671,9 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7british.txt}
 %    \begin{macrocode}
 %<*british>
-\ProvidesFile{APA7british.txt}[2019/12/29 v1.00 apa7 configuration for British English]
+\ProvidesFile{APA7british.txt}[2020/08/02 v1.01 apa7 configuration for British English]
 
+\renewcommand{\lastauthorseparator}{and}
 \renewcommand{\acksname}{Author Note}
 \renewcommand{\keywordname}{Keywords}
 \renewcommand{\notesname}{Footnotes}
@@ -3682,8 +3687,9 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7english.txt}
 %    \begin{macrocode}
 %<*english>
-\ProvidesFile{APA7english.txt}[2019/12/29 v1.00 apa7 configuration for non-American English]
+\ProvidesFile{APA7english.txt}[2020/08/02 v1.01 apa7 configuration for non-American English]
 
+\renewcommand{\lastauthorseparator}{and}
 \renewcommand{\acksname}{Author Note}
 \renewcommand{\keywordname}{Keywords}
 \renewcommand{\notesname}{Footnotes}
@@ -3695,8 +3701,9 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7dutch.txt}
 %    \begin{macrocode}
 %<*dutch>
-\ProvidesFile{APA7dutch.txt}[2019/12/29 v1.00 apa7 configuration for Dutch]
+\ProvidesFile{APA7dutch.txt}[2020/08/02 v1.01 apa7 configuration for Dutch]
 
+\renewcommand{\lastauthorseparator}{en}% and
 \renewcommand{\acksname}{Auteursnoot}% Author Note
 \renewcommand{\keywordname}{Trefwoorden}% Keywords
 \renewcommand{\notesname}{Voetnoten}% Footnotes
@@ -3708,8 +3715,9 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7german.txt}
 %    \begin{macrocode}
 %<*german>
-\ProvidesFile{APA7german.txt}[2019/12/29 v1.00 apa7 configuration for German]
+\ProvidesFile{APA7german.txt}[2020/08/02 v1.01 apa7 configuration for German]
 
+\renewcommand{\lastauthorseparator}{und}% and
 \renewcommand{\acksname}{Autorenhinweis}% Author Note
 \renewcommand{\keywordname}{Schl\"usselw\"orter}% Keywords
 \renewcommand{\notesname}{Fußnoten}% Footnotes
@@ -3721,8 +3729,9 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7ngerman.txt}
 %    \begin{macrocode}
 %<*ngerman>
-\ProvidesFile{APA7german.txt}[2019/12/29 v1.00 apa7 configuration for "new" German]
+\ProvidesFile{APA7ngerman.txt}[2020/08/02 v1.01 apa7 configuration for "new" German]
 
+\renewcommand{\lastauthorseparator}{und}% and
 \renewcommand{\acksname}{Autorenhinweis}% Author Note
 \renewcommand{\keywordname}{Schl\"usselw\"orter}% Keywords
 \renewcommand{\notesname}{Fußnoten}% Footnotes
@@ -3734,8 +3743,9 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7greek.txt}
 %    \begin{macrocode}
 %<*greek>
-\ProvidesFile{APA7greek.txt}[2019/12/29 v1.00 apa7 configuration for Greek]
+\ProvidesFile{APA7greek.txt}[2020/08/02 v1.01 apa7 configuration for Greek]
 
+\renewcommand{\lastauthorseparator}{και}% and
 \renewcommand{\acksname}{Shmei'wseis tou suggraf'ea}% Author Note
 \renewcommand{\keywordname}{L'exeis kleidi'a}% Keywords
 \renewcommand{\notesname}{Uposhmei'wseis}% Footnotes
@@ -3747,8 +3757,9 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7czech.txt}
 %    \begin{macrocode}
 %<*czech>
-\ProvidesFile{APA7czech.txt}[2019/12/29 v1.00 apa7 configuration for Czech]
+\ProvidesFile{APA7czech.txt}[2020/08/02 v1.01 apa7 configuration for Czech]
 
+\renewcommand{\lastauthorseparator}{a}% and
 \renewcommand{\acksname}{Poznámka~autora}% Author Note
 \renewcommand{\keywordname}{Klícová~1slova}% Keywords
 \renewcommand{\notesname}{Poznámky}% Footnotes
@@ -3760,8 +3771,9 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7turkish.txt}
 %    \begin{macrocode}
 %<*turkish>
-\ProvidesFile{APA7turkish.txt}[2019/12/29 v1.00 apa7 configuration for Turkish]
+\ProvidesFile{APA7turkish.txt}[2020/08/02 v1.01 apa7 configuration for Turkish]
 
+\renewcommand{\lastauthorseparator}{ve}% and
 \renewcommand{\acksname}{Yazar Notu}% Author Note
 \renewcommand{\keywordname}{Anahtar Kelimeler}% Keywords
 \renewcommand{\notesname}{Dipnotlar}% Footnotes
