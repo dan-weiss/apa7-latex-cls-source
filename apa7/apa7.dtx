@@ -4,11 +4,11 @@
 %                                                                           %
 %    CHANGE THESE VALUES WITH EACH NEW RELEASE:                             %
 %                                                                           %
-%<class>\ProvidesClass{apa7}[2020/08/02 v2.02 APA formatting (7th edition)]
+%<class>\ProvidesClass{apa7}[2020/08/12 v2.03 APA formatting (7th edition)]
 %                                                                           %
 %<*internal>                                                                %
-\def\apaSevenVersionDate{2020/08/02}
-\def\apaSevenVersionNumber{2.02}
+\def\apaSevenVersionDate{2020/08/12}
+\def\apaSevenVersionNumber{2.03}
 %                                                                           %
 %                                                                           %
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -109,6 +109,7 @@ and the derived files           apa7.ins,
                                 APA7british.txt,
                                 APA7dutch.txt,
                                 APA7english.txt,
+                                APA7french.txt,
                                 APA7german.txt,
                                 APA7ngerman.txt,
                                 APA7greek.txt,
@@ -131,6 +132,7 @@ and the derived files           apa7.ins,
   \file{./config/APA7british.txt}{\from{\jobname.dtx}{british}}
   \file{./config/APA7dutch.txt}{\from{\jobname.dtx}{dutch}}
   \file{./config/APA7english.txt}{\from{\jobname.dtx}{english}}
+  \file{./config/APA7french.txt}{\from{\jobname.dtx}{french}}
   \file{./config/APA7german.txt}{\from{\jobname.dtx}{german}}
   \file{./config/APA7ngerman.txt}{\from{\jobname.dtx}{ngerman}}
   \file{./config/APA7greek.txt}{\from{\jobname.dtx}{greek}}
@@ -250,6 +252,8 @@ and the derived files           apa7.ins,
 % \changes{v2.01}{2020/07/18}{Re-wrote author and affiliation to be APA7 compliant. Fixed spacing on Title Page for title and author. }
 %
 % \changes{v2.02}{2020/08/02}{Added the "and" in multiple author list to translation files. }
+%
+% \changes{v2.03}{2020/08/12}{Added French localization. }
 %
 % \begin{abstract}
 %   The \textit{Publication Manual} of the American Psychological
@@ -3698,6 +3702,22 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %    \end{macrocode}
 %\end{macro}
 %
+%
+%\begin{macro}{APA7french.txt}
+%    \begin{macrocode}
+%<*french>
+\ProvidesFile{APA7french.txt}[2020/08/12 v1.01 apa7 configuration for French] % translation by lejun[at]gmx.fr
+
+\renewcommand{\lastauthorseparator}{et}% and
+\renewcommand{\acksname}{Note de l'auteur}% Author Note
+\renewcommand{\keywordname}{Mots Clés}% Keywords
+\renewcommand{\notesname}{Notes de bas de page}% Footnotes
+
+%</english>
+%    \end{macrocode}
+%\end{macro}
+%
+%
 %\begin{macro}{APA7dutch.txt}
 %    \begin{macrocode}
 %<*dutch>
@@ -3711,6 +3731,7 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %</dutch>
 %    \end{macrocode}
 %\end{macro}
+%
 %
 %\begin{macro}{APA7german.txt}
 %    \begin{macrocode}
@@ -3726,6 +3747,7 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %    \end{macrocode}
 %\end{macro}
 %
+%
 %\begin{macro}{APA7ngerman.txt}
 %    \begin{macrocode}
 %<*ngerman>
@@ -3739,6 +3761,7 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %</ngerman>
 %    \end{macrocode}
 %\end{macro}
+%
 %
 %\begin{macro}{APA7greek.txt}
 %    \begin{macrocode}
@@ -3754,6 +3777,7 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %    \end{macrocode}
 %\end{macro}
 %
+%
 %\begin{macro}{APA7czech.txt}
 %    \begin{macrocode}
 %<*czech>
@@ -3768,6 +3792,7 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %    \end{macrocode}
 %\end{macro}
 %
+%
 %\begin{macro}{APA7turkish.txt}
 %    \begin{macrocode}
 %<*turkish>
@@ -3781,6 +3806,7 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %</turkish>
 %    \end{macrocode}
 %\end{macro}
+%
 %
 %\begin{macro}{APA7endfloat.cfg}
 %    \begin{macrocode}
