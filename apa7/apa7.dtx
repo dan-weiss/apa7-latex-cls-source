@@ -2743,6 +2743,11 @@ and the derived files           apa7.ins,
 
 \@ifundefined{def@jou}{}{%
 
+\renewcommand{\addORCIDlink}[2]{\href{https://orcid.org/#2}{{\mbox{\scalerel*{
+\begin{tikzpicture}[yscale=-1,transform shape]
+\pic{orcidlogo};
+\end{tikzpicture}
+}{|}}} #1}}
 
 %========== balance last-page columns =================
 
@@ -3387,7 +3392,7 @@ and the derived files           apa7.ins,
 \title{Sample APA-Style Document Using the \textsf{apa7} Package}
 
 \authorsnames{Daniel A. Weiss}
-\authorsaffiliations{A University Somewhere}
+\authorsaffiliations{Departement of Psychology, A University Somewhere}
 
 \leftheader{Weiss}
 
@@ -3397,6 +3402,10 @@ and the derived files           apa7.ins,
   The references are managed using \textsf{biblatex}.}
 
 \keywords{APA style, demonstration}
+
+\authornote{\addORCIDlink{Daniel A. Weiss}{0000-0000-0000-0000}, Department of Psychology, A University Somewhere
+
+Changes of Affiliations and other info here to describe what needs to be said}
 
 \begin{document}
 \maketitle
@@ -3410,7 +3419,7 @@ Method section.
 \subsection{Participants}
 We had a lot of people in this study, show in Figure \ref{fig:Figure1}.
 
-\begin{figure}[htbp]
+\begin{figure}[!htp]
     \caption{This is my figure caption.}
     \includegraphics[bb=0in 0in 2.5in 2.5in, height=1.4in, width=1.4in]{Figure1.pdf}
     \figurenote{This is an awesome figure.}
