@@ -4,11 +4,11 @@
 %                                                                           %
 %    CHANGE THESE VALUES WITH EACH NEW RELEASE:                             %
 %                                                                           %
-%<class>\ProvidesClass{apa7}[2020/10/11 v2.04 APA formatting (7th edition)]
+%<class>\ProvidesClass{apa7}[2020/11/14 v2.05 APA formatting (7th edition)]
 %                                                                           %
 %<*internal>                                                                %
-\def\apaSevenVersionDate{2020/10/11}
-\def\apaSevenVersionNumber{2.04}
+\def\apaSevenVersionDate{2020/11/14}
+\def\apaSevenVersionNumber{2.05}
 %                                                                           %
 %                                                                           %
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -257,6 +257,8 @@ and the derived files           apa7.ins,
 %
 % \changes{v2.04}{2020/10/11}{Updated ORCID link style for jou mode. }
 %
+% \changes{v2.05}{2020/11/14}{Fixed a bug witht the noextraspace option and added donotrepeattitle option to the documentation. }
+%
 % \begin{abstract}
 %   The \textit{Publication Manual} of the American Psychological
 %   Association is widely used in the social sciences.  The most
@@ -338,6 +340,8 @@ and the derived files           apa7.ins,
 %   \textsf{babel}; the desired language(s) are listed as options
 %   immediately following |babel|; the last language listed is the
 %   main one.
+% \item \DescribeMacro{donotrepeattitle}|donotrepeattitle|: Suppress the title above the 
+%   introduction (in case a different title is desired).
 % \item \DescribeMacro{noextraspace}|noextraspace|: In |man| and |stu| mode,
 %   removes some of the vertical space between certain elements (e.g.,
 %   headers and text) in an attempt to more closely resemble true
@@ -2566,7 +2570,7 @@ and the derived files           apa7.ins,
   \ifapamodeman{%
     \@ifundefined{def@noextraspace}{%
       \vspace{\baselineskip}\\
-    }{}
+    }{\\}
   }{%
     \vspace{\baselineskip}\\
   }
