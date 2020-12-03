@@ -4,11 +4,11 @@
 %                                                                           %
 %    CHANGE THESE VALUES WITH EACH NEW RELEASE:                             %
 %                                                                           %
-%<class>\ProvidesClass{apa7}[2020/11/14 v2.05 APA formatting (7th edition)]
+%<class>\ProvidesClass{apa7}[2020/12/02 v2.06 APA formatting (7th edition)]
 %                                                                           %
 %<*internal>                                                                %
-\def\apaSevenVersionDate{2020/11/14}
-\def\apaSevenVersionNumber{2.05}
+\def\apaSevenVersionDate{2020/12/02}
+\def\apaSevenVersionNumber{2.06}
 %                                                                           %
 %                                                                           %
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -251,13 +251,15 @@ and the derived files           apa7.ins,
 %
 % \changes{v2.01}{2020/07/18}{Re-wrote author and affiliation to be APA7 compliant. Fixed spacing on Title Page for title and author. }
 %
-% \changes{v2.02}{2020/08/02}{Added the "and" in multiple author list to translation files. }
+% \changes{v2.02}{2020/08/02}{Added the "and" in multiple author list to localization files. }
 %
 % \changes{v2.03}{2020/08/12}{Added French localization. }
 %
 % \changes{v2.04}{2020/10/11}{Updated ORCID link style for jou mode. }
 %
-% \changes{v2.05}{2020/11/14}{Fixed a bug witht the noextraspace option and added donotrepeattitle option to the documentation. }
+% \changes{v2.05}{2020/11/14}{Fixed a bug with the noextraspace option and added donotrepeattitle option to the documentation. }
+%
+% \changes{v2.06}{2020/12/02}{Added tablenote command. Added "Note." for table/figure notes to localization files. }
 %
 % \begin{abstract}
 %   The \textit{Publication Manual} of the American Psychological
@@ -610,6 +612,9 @@ and the derived files           apa7.ins,
 % \item
 %   \DescribeMacro{\figurenote}|\figurenote|\marg{figure-note-text}:
 %   Formats figure note when placed after |\includegraphic|, |\fitfigure|, or similar command within |\begin{figure}| and |\end{figure}|.
+% \item
+%   \DescribeMacro{\tablenote}|\tablenote|\marg{table-note-text}:
+%   Formats table note when placed after |\end{tabular}| or similar command within |\begin{table}| and |\end{table}|.
 % \item
 %   \DescribeMacro{\fitfigure}|\fitfigure|\oarg{height}\marg{eps-filename}:
 %   Automatically fit a postscript figure; use instead of
@@ -981,9 +986,7 @@ and the derived files           apa7.ins,
      Probabilistic                   &     80  &    20\tabfnm{*}  &  200     \\
      Categorical -- coda\tabfnm{b}   &      0  &   100\tabfnm{*}  &  196     \\ \midrule
      \end{tabular}
-     \begin{tablenotes}[para,flushleft]
-         {\small
-             \textit{Note.} All data are approximate.
+     \tablenote{All data are approximate.
  
              \tabfnt{a}Categorical may be onset.
              \tabfnt{b}Categorical may also be coda.
@@ -991,7 +994,6 @@ and the derived files           apa7.ins,
              \tabfnt{*}\textit{p} < .05.
              \tabfnt{**}\textit{p} < .01.
           }
-     \end{tablenotes}
    \end{threeparttable}
  \end{table}
 
@@ -1454,6 +1456,7 @@ and the derived files           apa7.ins,
 \def\acksname{Author Note}
 \def\keywordname{Keywords}
 \def\notesname{Footnotes}
+\def\notelabel{Note}
 
 \AtBeginDocument{% so that we know what language is active in babel
 
@@ -1855,7 +1858,12 @@ and the derived files           apa7.ins,
 %
 %=============================================================
 
-\newcommand{\figurenote}[1]{\par \small \textit{Note.} {#1}}
+\newcommand{\figurenote}[1]{\par \small \textit{\notelabel.} {#1}}
+\newcommand{\tablenote}[1]{\begin{tablenotes}[para,flushleft]
+        {\small
+            \textit{\notelabel.} {#1}
+         }
+    \end{tablenotes}}
 
 % Code from theapa.sty
 
@@ -3475,9 +3483,7 @@ statistical prowess in analyzing these data is unmatched.
     Probabilistic                   &     80  &    20\tabfnm{*}  &  200     \\
     Categorical -- coda\tabfnm{b}   &      0  &   100\tabfnm{*}  &  196     \\ \midrule
     \end{tabular}
-    \begin{tablenotes}[para,flushleft]
-        {\small
-            \textit{Note.} All data are approximate.
+    \tablenote{All data are approximate.
 
             \tabfnt{a}Categorical may be onset.
             \tabfnt{b}Categorical may also be coda.
@@ -3485,7 +3491,6 @@ statistical prowess in analyzing these data is unmatched.
             \tabfnt{*}\textit{p} < .05.
             \tabfnt{**}\textit{p} < .01.
          }
-    \end{tablenotes}
   \end{threeparttable}
 \end{table}
 
@@ -3647,9 +3652,7 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
     Probabilistic                   &     80  &    20\tabfnm{*}  &  200     \\
     Categorical -- coda\tabfnm{b}   &      0  &   100\tabfnm{*}  &  196     \\ \midrule
     \end{tabular}
-    \begin{tablenotes}[para,flushleft]
-        {\small
-            \textit{Note.} All data are approximate.
+    \tablenote{All data are approximate.
 
             \tabfnt{a}Categorical may be onset.
             \tabfnt{b}Categorical may also be coda.
@@ -3657,7 +3660,6 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
             \tabfnt{*}\textit{p} < .05.
             \tabfnt{**}\textit{p} < .01.
          }
-    \end{tablenotes}
   \end{threeparttable}
 \end{table}
 
@@ -3674,12 +3676,13 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7american.txt}
 %    \begin{macrocode}
 %<*american>
-\ProvidesFile{APA7american.txt}[2020/08/02 v1.01 apa7 configuration for American English]
+\ProvidesFile{APA7american.txt}[2020/12/02 v1.02 apa7 configuration for American English]
 
 \renewcommand{\lastauthorseparator}{and}
 \renewcommand{\acksname}{Author Note}
 \renewcommand{\keywordname}{Keywords}
 \renewcommand{\notesname}{Footnotes}
+\renewcommand{\notelabel}{Note}
 
 
 %</american>
@@ -3690,12 +3693,13 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7british.txt}
 %    \begin{macrocode}
 %<*british>
-\ProvidesFile{APA7british.txt}[2020/08/02 v1.01 apa7 configuration for British English]
+\ProvidesFile{APA7british.txt}[2020/12/02 v1.02 apa7 configuration for British English]
 
 \renewcommand{\lastauthorseparator}{and}
 \renewcommand{\acksname}{Author Note}
 \renewcommand{\keywordname}{Keywords}
 \renewcommand{\notesname}{Footnotes}
+\renewcommand{\notelabel}{Note}
 
 
 %</british>
@@ -3706,12 +3710,13 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7english.txt}
 %    \begin{macrocode}
 %<*english>
-\ProvidesFile{APA7english.txt}[2020/08/02 v1.01 apa7 configuration for non-American English]
+\ProvidesFile{APA7english.txt}[2020/12/02 v1.02 apa7 configuration for non-American English]
 
 \renewcommand{\lastauthorseparator}{and}
 \renewcommand{\acksname}{Author Note}
 \renewcommand{\keywordname}{Keywords}
 \renewcommand{\notesname}{Footnotes}
+\renewcommand{\notelabel}{Note}
 
 %</english>
 %    \end{macrocode}
@@ -3721,12 +3726,13 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7french.txt}
 %    \begin{macrocode}
 %<*french>
-\ProvidesFile{APA7french.txt}[2020/08/12 v1.01 apa7 configuration for French] % translation by lejun[at]gmx.fr
+\ProvidesFile{APA7french.txt}[2020/12/02 v1.02 apa7 configuration for French] % translation by lejun[at]gmx.fr
 
 \renewcommand{\lastauthorseparator}{et}% and
 \renewcommand{\acksname}{Note de l'auteur}% Author Note
 \renewcommand{\keywordname}{Mots Clés}% Keywords
 \renewcommand{\notesname}{Notes de bas de page}% Footnotes
+\renewcommand{\notelabel}{Note}%Note
 
 %</french>
 %    \end{macrocode}
@@ -3736,12 +3742,13 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7dutch.txt}
 %    \begin{macrocode}
 %<*dutch>
-\ProvidesFile{APA7dutch.txt}[2020/08/02 v1.01 apa7 configuration for Dutch]
+\ProvidesFile{APA7dutch.txt}[2020/12/02 v1.02 apa7 configuration for Dutch]
 
 \renewcommand{\lastauthorseparator}{en}% and
 \renewcommand{\acksname}{Auteursnoot}% Author Note
 \renewcommand{\keywordname}{Trefwoorden}% Keywords
 \renewcommand{\notesname}{Voetnoten}% Footnotes
+\renewcommand{\notelabel}{Noot}%Note
 
 %</dutch>
 %    \end{macrocode}
@@ -3751,12 +3758,13 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7german.txt}
 %    \begin{macrocode}
 %<*german>
-\ProvidesFile{APA7german.txt}[2020/08/02 v1.01 apa7 configuration for German]
+\ProvidesFile{APA7german.txt}[2020/12/02 v1.02 apa7 configuration for German]
 
 \renewcommand{\lastauthorseparator}{und}% and
 \renewcommand{\acksname}{Autorenhinweis}% Author Note
 \renewcommand{\keywordname}{Schl\"usselw\"orter}% Keywords
 \renewcommand{\notesname}{Fußnoten}% Footnotes
+\renewcommand{\notelabel}{Anmerkung}%Note
 
 %</german>
 %    \end{macrocode}
@@ -3766,12 +3774,13 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7ngerman.txt}
 %    \begin{macrocode}
 %<*ngerman>
-\ProvidesFile{APA7ngerman.txt}[2020/08/02 v1.01 apa7 configuration for "new" German]
+\ProvidesFile{APA7ngerman.txt}[2020/12/02 v1.02 apa7 configuration for "new" German]
 
 \renewcommand{\lastauthorseparator}{und}% and
 \renewcommand{\acksname}{Autorenhinweis}% Author Note
 \renewcommand{\keywordname}{Schl\"usselw\"orter}% Keywords
 \renewcommand{\notesname}{Fußnoten}% Footnotes
+\renewcommand{\notelabel}{Anmerkung}%Note
 
 %</ngerman>
 %    \end{macrocode}
@@ -3781,12 +3790,13 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7greek.txt}
 %    \begin{macrocode}
 %<*greek>
-\ProvidesFile{APA7greek.txt}[2020/08/02 v1.01 apa7 configuration for Greek]
+\ProvidesFile{APA7greek.txt}[2020/12/02 v1.02 apa7 configuration for Greek]
 
 \renewcommand{\lastauthorseparator}{και}% and
-\renewcommand{\acksname}{Shmei'wseis tou suggraf'ea}% Author Note
-\renewcommand{\keywordname}{L'exeis kleidi'a}% Keywords
-\renewcommand{\notesname}{Uposhmei'wseis}% Footnotes
+\renewcommand{\acksname}{Σημείωση του συγγραφέα}% Author Note
+\renewcommand{\keywordname}{λέξεις-κλειδιά}% Keywords
+\renewcommand{\notesname}{υποσημείωση}% Footnotes
+\renewcommand{\notelabel}{Σημείωση}%Note
 
 %</greek>
 %    \end{macrocode}
@@ -3796,12 +3806,13 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7czech.txt}
 %    \begin{macrocode}
 %<*czech>
-\ProvidesFile{APA7czech.txt}[2020/08/02 v1.01 apa7 configuration for Czech]
+\ProvidesFile{APA7czech.txt}[2020/12/02 v1.02 apa7 configuration for Czech]
 
 \renewcommand{\lastauthorseparator}{a}% and
 \renewcommand{\acksname}{Poznámka~autora}% Author Note
 \renewcommand{\keywordname}{Klícová~1slova}% Keywords
 \renewcommand{\notesname}{Poznámky}% Footnotes
+\renewcommand{\notelabel}{Nota}%Note
 
 %</czech>
 %    \end{macrocode}
@@ -3811,12 +3822,13 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7turkish.txt}
 %    \begin{macrocode}
 %<*turkish>
-\ProvidesFile{APA7turkish.txt}[2020/08/02 v1.01 apa7 configuration for Turkish]
+\ProvidesFile{APA7turkish.txt}[2020/12/02 v1.02 apa7 configuration for Turkish]
 
 \renewcommand{\lastauthorseparator}{ve}% and
 \renewcommand{\acksname}{Yazar Notu}% Author Note
 \renewcommand{\keywordname}{Anahtar Kelimeler}% Keywords
 \renewcommand{\notesname}{Dipnotlar}% Footnotes
+\renewcommand{\notelabel}{Not}%Note
 
 %</turkish>
 %    \end{macrocode}
