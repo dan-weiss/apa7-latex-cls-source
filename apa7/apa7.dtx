@@ -4,11 +4,11 @@
 %                                                                           %
 %    CHANGE THESE VALUES WITH EACH NEW RELEASE:                             %
 %                                                                           %
-%<class>\ProvidesClass{apa7}[2020/12/02 v2.06 APA formatting (7th edition)]
+%<class>\ProvidesClass{apa7}[2020/12/05 v2.07 APA formatting (7th edition)]
 %                                                                           %
 %<*internal>                                                                %
-\def\apaSevenVersionDate{2020/12/02}
-\def\apaSevenVersionNumber{2.06}
+\def\apaSevenVersionDate{2020/12/05}
+\def\apaSevenVersionNumber{2.07}
 %                                                                           %
 %                                                                           %
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -260,6 +260,8 @@ and the derived files           apa7.ins,
 % \changes{v2.05}{2020/11/14}{Fixed a bug with the noextraspace option and added donotrepeattitle option to the documentation. }
 %
 % \changes{v2.06}{2020/12/02}{Added tablenote command. Added "Note." for table/figure notes to localization files. }
+%
+% \changes{v2.07}{2020/12/05}{Extended mask command to also mask in stu mode. }
 %
 % \begin{abstract}
 %   The \textit{Publication Manual} of the American Psychological
@@ -2609,28 +2611,36 @@ and the derived files           apa7.ins,
        }
   }{%  mask author identity -- show nothing in the author or author note space
   }}{% Student Manuscript
+    \@ifundefined{apaSeven@maskauthoridentity}{%  BDB
       \displayauthors \\
       
       \displayaffiliations
-      
+    }{%  mask author identity -- show nothing in the author or affiliations space
+    }
       \@course \\ 
       \@professor \\ 
       \@duedate \\ 
       
+    \@ifundefined{apaSeven@maskauthoridentity}{%  BDB
       \@ifundefined{@note}
        {\vspace*{\baselineskip} }
        {\@note}
+    }{%  mask author identity -- show nothing in the note space
+    }
        
         \end{center}
        
        \@ifundefined{@acks}
        {}
        {%
-         \vfill%
-        \section{\normalfont\normalsize\textbf\acksname}
-         \raggedright
-         \setlength{\parindent}{0.5in}
-         \indent\@acks\par%
+         \@ifundefined{apaSeven@maskauthoridentity}{%  BDB
+           \vfill%
+           \section{\normalfont\normalsize\textbf\acksname}
+           \raggedright
+           \setlength{\parindent}{0.5in}
+           \indent\@acks\par%
+         }{%  mask author identity -- show nothing in the author note space
+         }
        }
   
   }
