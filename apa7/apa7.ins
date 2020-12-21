@@ -30,6 +30,11 @@
 \input docstrip.tex
 \keepsilent
 \askforoverwritefalse
+\nopreamble\nopostamble
+\usedir{tex/latex/apa7/samples}
+\generate{
+  \file{./samples/shortsample-verbatim.tex}{\from{\jobname.dtx}{shortsample}}
+}
 \preamble
 ----------------------------------------------------------------------
 
@@ -92,6 +97,7 @@ and the derived files           apa7.ins,
                                 APA7endfloat.cfg,
                                 Figure1.pdf,
                                 shortsample.tex,
+                                shortsample-verbatim.tex,
                                 longsample.tex, and
                                 bibliography.bib.
 
@@ -159,6 +165,7 @@ and the derived files           apa7.ins,
 %%                                 APA7endfloat.cfg,
 %%                                 Figure1.pdf,
 %%                                 shortsample.tex,
+%%                                 shortsample-verbatim.tex,
 %%                                 longsample.tex, and
 %%                                 bibliography.bib.
 %% 

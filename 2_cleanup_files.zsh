@@ -37,4 +37,5 @@ rm shortsample.log
 rm shortsample.out
 rm shortsample.run.xml
 rm shortsample.ttt
+rm shortsample-verbatim.tex
 rm bibliography.bib

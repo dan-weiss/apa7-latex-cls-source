@@ -4,11 +4,11 @@
 %                                                                           %
 %    CHANGE THESE VALUES WITH EACH NEW RELEASE:                             %
 %                                                                           %
-%<class>\ProvidesClass{apa7}[2020/12/05 v2.07 APA formatting (7th edition)]
+%<class>\ProvidesClass{apa7}[2020/12/21 v2.08 APA formatting (7th edition)]
 %                                                                           %
 %<*internal>                                                                %
-\def\apaSevenVersionDate{2020/12/05}
-\def\apaSevenVersionNumber{2.07}
+\def\apaSevenVersionDate{2020/12/21}
+\def\apaSevenVersionNumber{2.08}
 %                                                                           %
 %                                                                           %
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -55,6 +55,11 @@ manuscript type has been added. See the documentation for details.
 \input docstrip.tex
 \keepsilent
 \askforoverwritefalse
+\nopreamble\nopostamble
+\usedir{tex/latex/apa7/samples}
+\generate{
+  \file{./samples/shortsample-verbatim.tex}{\from{\jobname.dtx}{shortsample}}
+}
 \preamble
 ----------------------------------------------------------------------
 
@@ -118,6 +123,7 @@ and the derived files           apa7.ins,
                                 APA7endfloat.cfg,
                                 Figure1.pdf,
                                 shortsample.tex,
+                                shortsample-verbatim.tex,
                                 longsample.tex, and
                                 bibliography.bib.
 
@@ -262,6 +268,8 @@ and the derived files           apa7.ins,
 % \changes{v2.06}{2020/12/02}{Added tablenote command. Added "Note." for table/figure notes to localization files. }
 %
 % \changes{v2.07}{2020/12/05}{Extended mask command to also mask in stu mode. }
+%
+% \changes{v2.08}{2020/12/21}{ }
 %
 % \begin{abstract}
 %   The \textit{Publication Manual} of the American Psychological
@@ -901,121 +909,21 @@ and the derived files           apa7.ins,
 %
 % \newpage
 %
-% \subsection{shortsample.tex}
-% \iffalse
-%<*verb>
-% \fi
- \begin{verbnobox}[\hspace{-3cm}]
- \documentclass[jou]{apa7}
-
- \usepackage[american]{babel}
-
- \usepackage{csquotes}
- \usepackage[style=apa,sortcites=true,sorting=nyt,backend=biber]{biblatex}
- \DeclareLanguageMapping{american}{american-apa}
- \addbibresource{bibliography.bib}
-
- \title{Sample APA-Style Document Using the \textsf{apa7} Package}
-
- \author{Daniel A. Weiss}
- \affiliation{A University Somewhere}
-
- \leftheader{Weiss}
-
- \abstract{This demonstration paper uses the \textsf{apa7} \LaTeX\
-   class to format the document in compliance with the 7th Edition of
-   the American Psychological Assocation's \textit{Publication Manual.}
-   The references are managed using \textsf{biblatex}.}
-
- \keywords{APA style, demonstration}
-
- \begin{document}
- \maketitle
- We begin with \textcite{Shotton1989}.  We can also cite this work in
- parenthesis, like this: \parencite{Shotton1989}.
-
- A three-author paper \parencite[e.g.,][]{Lassen2006} lists all
- three authors for the first citation, then only the first author
- on all subsequent citations \parencite{Lassen2006}.
-
- Note the use of five heading levels throughout this demonstration
- Method section.
-
- \section{Method}
- \subsection{Participants}
- We had a lot of people in this study.
-
- \subsection{Materials}
- Several materials were used for this project.  Some of them were
- already created for prior research.
-
- \subsubsection{Paper-and-Pencil Instrument}
- We used an instrument that we found to be highly successful.
-
- \paragraph{Reliability}
- The reliability of this instrument is extraordinary.
-
- \paragraph{Validity}
- We now discuss the validity of our instrument.
-
- \subparagraph{Face validity} The face validity is exceptionally
- strong.  Everyone should be impressed.
-
- \subparagraph{Construct validity} Also very strong.
-
- \subsection{Design}
- This section describes the study's design.
-
- \subsection{Procedure}
- The procedure was fairly straightforward, yet required
- attention to detail.
-
- \section{Results}
- Table \ref{tab:ComplexTable} contains some sample data.  Our
- statistical prowess in analyzing these data is unmatched.
-
- \begin{table}[htbp]
-   \vspace*{2em}
-   \begin{threeparttable}
-     \caption{A Complex Table}
-     \label{tab:ComplexTable}
-     \begin{tabular}{@{}lrrr@{}}         \toprule
-     Distribution type  & \multicolumn{2}{l}{Percentage of} & Total number   \\
-                        & \multicolumn{2}{l}{targets with}  & of trials per  \\
-                        & \multicolumn{2}{l}{segment in}    & participant    \\ \cmidrule(r){2-3}
-                                     &  Onset  &  Coda            &          \\ \midrule
-     Categorical -- onset\tabfnm{a}  &    100  &     0            &  196     \\
-     Probabilistic                   &     80  &    20\tabfnm{*}  &  200     \\
-     Categorical -- coda\tabfnm{b}   &      0  &   100\tabfnm{*}  &  196     \\ \midrule
-     \end{tabular}
-     \tablenote{All data are approximate.
- 
-             \tabfnt{a}Categorical may be onset.
-             \tabfnt{b}Categorical may also be coda.
- 
-             \tabfnt{*}\textit{p} < .05.
-             \tabfnt{**}\textit{p} < .01.
-          }
-   \end{threeparttable}
- \end{table}
-
- \section{Discussion}
- This is a lengthy and erudite discussion.  It demonstrates amazing
- skill in interpreting the results for the masses.
-
- \printbibliography
-
- \end{document}
- \end{verbnobox}
-% \iffalse
-%</verb>
-% \fi
-%
 % \subsection{shortsample.pdf}
 % \IfFileExists{samples/shortsample.pdf}%
 %   {\includegraphics[scale=0.8, trim = 1in 1.5in 1in 0.8in]{samples/shortsample.pdf}}%
 %   {PRINTED DOCUMENT WILL BE DISPLAYED HERE \newpage}
 %
+% \subsection{shortsample.tex}
+% \iffalse
+%<*verb>
+% \fi
+\verbfilenobox[\hspace{-3cm}]{samples/shortsample-verbatim.tex}
+% \iffalse
+%</verb>
+% \fi
+%
+% \newpage
 %
 % \StopEventually{^^A
 %   \PrintChanges
