@@ -1130,9 +1130,9 @@ and the derived files           apa7.ins,
       \AtEndPreamble{%
         \@ifpackageloaded{biblatex}{%  the user has loaded biblatex
           \@ifundefined{def@man}{%
-            \defbibheading{bibliography}{\section*{\normalfont\textbf\refname}}%
+            \defbibheading{bibliography}{\section*{\refname}}%
           }{%
-            \defbibheading{bibliography}{\clearpage\section*{\normalfont\textbf\refname}}%
+            \defbibheading{bibliography}{\clearpage\section*{\refname}}%
           }
         }{}
       }
@@ -1141,9 +1141,9 @@ and the derived files           apa7.ins,
       \def\def@biblatex{\@biblatexmode}%  the selected bibliography package is Biblatex
       \RequirePackage[style=apa,sortcites=true,sorting=nyt,backend=biber]{biblatex}
       \@ifundefined{def@man}{%
-        \defbibheading{bibliography}{\section*{\normalfont\textbf\refname}}%
+        \defbibheading{bibliography}{\section*{\refname}}%
       }{%
-        \defbibheading{bibliography}{\clearpage\section*{\normalfont\textbf\refname}}%
+        \defbibheading{bibliography}{\clearpage\section*{\refname}}%
       }
       \ClassInfo{apa7}{The selected bibliography package, biblatex, has been loaded}
     }
@@ -1355,6 +1355,8 @@ and the derived files           apa7.ins,
      \def\endtablenotes{\par}%
   }
 }
+
+\RequirePackage{titlecaps} % This is for title case headings and figure titles
 
 %========= Language portability parameters ===========
 
@@ -1700,14 +1702,14 @@ and the derived files           apa7.ins,
 
 \renewcommand{\section}{\@startsection {section}{1}{\z@}%
     {\b@level@one@skip}{\e@level@one@skip}%
-    {\centering\normalfont\normalsize\bfseries}}
+    {\centering\normalfont\normalsize\bfseries\titlecap}}
 
 \renewcommand{\subsection}{\@startsection{subsection}{2}{\z@}%
     {\b@level@two@skip}{\e@level@two@skip}%
-    {\normalfont\normalsize\bfseries}}
+    {\normalfont\normalsize\bfseries\titlecap}}
 
 
-\newcommand*{\typesectitle}[1]{#1\addperi}
+\newcommand*{\typesectitle}[1]{\titlecap{#1}\addperi}
 
 \newcommand*{\addperi}{%
   \relax\ifhmode%
@@ -1717,17 +1719,17 @@ and the derived files           apa7.ins,
 
 \renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{\z@}%
     {\b@level@three@skip}{\e@level@three@skip}%
-    {\normalfont\normalsize\bfseries\itshape}}
+    {\normalfont\normalsize\bfseries\itshape\titlecap}}
 
 \renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
     {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
     {-1em}%
     {\normalfont\normalsize\bfseries\typesectitle}}
 
-\renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
+\renewcommand{\subparagraph}{\@startsection{subparagraph}{5}{\parindent}%
     {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
-    {-\z@\relax}%
-    {\normalfont\normalsize\bfseries\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
+    {-1em}%
+    {\normalfont\normalsize\bfseries\itshape\typesectitle}}
 
 % make the References section non-boldface
 \AtBeginDocument{\def\st@rtbibsection{\mspart{\refname}}}%  BDB -- this is for apacite
@@ -2484,7 +2486,7 @@ and the derived files           apa7.ins,
 %  \makebox[\linewidth][l]{\rheadname\hspace{0.1in}\MakeUppercase{\r@headr}}\\ %thp090298
 
   \vspace*{4\baselineskip}
-  \textbf\@title%
+  \textbf{\titlecap{\@title}}%
   \ifapamodeman{%
     \@ifundefined{def@noextraspace}{%
       \vspace{\baselineskip}\\
@@ -2512,7 +2514,7 @@ and the derived files           apa7.ins,
        {}
        {%
          \vfill%
-        \section{\normalfont\normalsize\textbf\acksname}
+        \section{\acksname}
          \raggedright
          \setlength{\parindent}{0.5in}
          \indent\@acks\par%
@@ -2543,7 +2545,7 @@ and the derived files           apa7.ins,
        {%
          \@ifundefined{apaSeven@maskauthoridentity}{%  BDB
            \vfill%
-           \section{\normalfont\normalsize\textbf\acksname}
+           \section{\acksname}
            \raggedright
            \setlength{\parindent}{0.5in}
            \indent\@acks\par%
@@ -2556,7 +2558,7 @@ and the derived files           apa7.ins,
   %BDB\hyphenpenalty 10000
   \fussy
   \@ifundefined{@abstract}{}{%
-    \section{\normalfont\normalsize\textbf\abstractname}% BDB
+    \section{\abstractname}% BDB
     \noindent\@abstract\par% BDB
     \@ifundefined{@keywords}{}{%
       \setlength{\parindent}{0.5in}% BDB
@@ -2566,7 +2568,7 @@ and the derived files           apa7.ins,
   }
 
   \@ifundefined{def@donotrepeattitle}{
-    \section{\protect\normalfont\textbf{\@title}}
+    \section{\@title}
   }{}%
   \raggedright%
   \setlength{\parindent}{0.5in}%
@@ -3594,14 +3596,14 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7american.txt}
 %    \begin{macrocode}
 %<*american>
-\ProvidesFile{APA7american.txt}[2020/12/02 v1.02 apa7 configuration for American English]
+\ProvidesFile{APA7american.txt}[2020/12/21 v1.03 apa7configuration for American English]
 
 \renewcommand{\lastauthorseparator}{and}
 \renewcommand{\acksname}{Author Note}
 \renewcommand{\keywordname}{Keywords}
 \renewcommand{\notesname}{Footnotes}
 \renewcommand{\notelabel}{Note}
-
+\Addlcwords{and as but for if nor or so yet a an the as at by for in of off on per to up via}
 
 %</american>
 %    \end{macrocode}
@@ -3611,14 +3613,14 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7british.txt}
 %    \begin{macrocode}
 %<*british>
-\ProvidesFile{APA7british.txt}[2020/12/02 v1.02 apa7 configuration for British English]
+\ProvidesFile{APA7british.txt}[2020/12/21 v1.03 apa7configuration for British English]
 
 \renewcommand{\lastauthorseparator}{and}
 \renewcommand{\acksname}{Author Note}
 \renewcommand{\keywordname}{Keywords}
 \renewcommand{\notesname}{Footnotes}
 \renewcommand{\notelabel}{Note}
-
+\Addlcwords{and as but for if nor or so yet a an the as at by for in of off on per to up via}
 
 %</british>
 %    \end{macrocode}
@@ -3628,13 +3630,14 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7english.txt}
 %    \begin{macrocode}
 %<*english>
-\ProvidesFile{APA7english.txt}[2020/12/02 v1.02 apa7 configuration for non-American English]
+\ProvidesFile{APA7english.txt}[2020/12/21 v1.03 apa7configuration for non-American English]
 
 \renewcommand{\lastauthorseparator}{and}
 \renewcommand{\acksname}{Author Note}
 \renewcommand{\keywordname}{Keywords}
 \renewcommand{\notesname}{Footnotes}
 \renewcommand{\notelabel}{Note}
+\Addlcwords{and as but for if nor or so yet a an the as at by for in of off on per to up via}
 
 %</english>
 %    \end{macrocode}
@@ -3644,13 +3647,14 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7french.txt}
 %    \begin{macrocode}
 %<*french>
-\ProvidesFile{APA7french.txt}[2020/12/02 v1.02 apa7 configuration for French] % translation by lejun[at]gmx.fr
+\ProvidesFile{APA7french.txt}[2020/12/21 v1.03 apa7configuration for French] % translation by lejun[at]gmx.fr
 
 \renewcommand{\lastauthorseparator}{et}% and
 \renewcommand{\acksname}{Note de l'auteur}% Author Note
 \renewcommand{\keywordname}{Mots Clés}% Keywords
 \renewcommand{\notesname}{Notes de bas de page}% Footnotes
 \renewcommand{\notelabel}{Note}%Note
+\Addlcwords{} %words that should be lowercase for titlecaps package
 
 %</french>
 %    \end{macrocode}
@@ -3660,13 +3664,14 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7dutch.txt}
 %    \begin{macrocode}
 %<*dutch>
-\ProvidesFile{APA7dutch.txt}[2020/12/02 v1.02 apa7 configuration for Dutch]
+\ProvidesFile{APA7dutch.txt}[2020/12/21 v1.03 apa7configuration for Dutch]
 
 \renewcommand{\lastauthorseparator}{en}% and
 \renewcommand{\acksname}{Auteursnoot}% Author Note
 \renewcommand{\keywordname}{Trefwoorden}% Keywords
 \renewcommand{\notesname}{Voetnoten}% Footnotes
 \renewcommand{\notelabel}{Noot}%Note
+\Addlcwords{} %words that should be lowercase for titlecaps package
 
 %</dutch>
 %    \end{macrocode}
@@ -3676,13 +3681,14 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7german.txt}
 %    \begin{macrocode}
 %<*german>
-\ProvidesFile{APA7german.txt}[2020/12/02 v1.02 apa7 configuration for German]
+\ProvidesFile{APA7german.txt}[2020/12/21 v1.03 apa7configuration for German]
 
 \renewcommand{\lastauthorseparator}{und}% and
 \renewcommand{\acksname}{Autorenhinweis}% Author Note
 \renewcommand{\keywordname}{Schl\"usselw\"orter}% Keywords
 \renewcommand{\notesname}{Fußnoten}% Footnotes
 \renewcommand{\notelabel}{Anmerkung}%Note
+\Addlcwords{} %words that should be lowercase for titlecaps package
 
 %</german>
 %    \end{macrocode}
@@ -3692,13 +3698,14 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7ngerman.txt}
 %    \begin{macrocode}
 %<*ngerman>
-\ProvidesFile{APA7ngerman.txt}[2020/12/02 v1.02 apa7 configuration for "new" German]
+\ProvidesFile{APA7ngerman.txt}[2020/12/21 v1.03 apa7configuration for "new" German]
 
 \renewcommand{\lastauthorseparator}{und}% and
 \renewcommand{\acksname}{Autorenhinweis}% Author Note
 \renewcommand{\keywordname}{Schl\"usselw\"orter}% Keywords
 \renewcommand{\notesname}{Fußnoten}% Footnotes
 \renewcommand{\notelabel}{Anmerkung}%Note
+\Addlcwords{} %words that should be lowercase for titlecaps package
 
 %</ngerman>
 %    \end{macrocode}
@@ -3708,13 +3715,14 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7greek.txt}
 %    \begin{macrocode}
 %<*greek>
-\ProvidesFile{APA7greek.txt}[2020/12/02 v1.02 apa7 configuration for Greek]
+\ProvidesFile{APA7greek.txt}[2020/12/21 v1.03 apa7configuration for Greek]
 
 \renewcommand{\lastauthorseparator}{και}% and
 \renewcommand{\acksname}{Σημείωση του συγγραφέα}% Author Note
 \renewcommand{\keywordname}{λέξεις-κλειδιά}% Keywords
 \renewcommand{\notesname}{υποσημείωση}% Footnotes
 \renewcommand{\notelabel}{Σημείωση}%Note
+\Addlcwords{} %words that should be lowercase for titlecaps package
 
 %</greek>
 %    \end{macrocode}
@@ -3724,13 +3732,14 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7czech.txt}
 %    \begin{macrocode}
 %<*czech>
-\ProvidesFile{APA7czech.txt}[2020/12/02 v1.02 apa7 configuration for Czech]
+\ProvidesFile{APA7czech.txt}[2020/12/21 v1.03 apa7configuration for Czech]
 
 \renewcommand{\lastauthorseparator}{a}% and
 \renewcommand{\acksname}{Poznámka~autora}% Author Note
 \renewcommand{\keywordname}{Klícová~1slova}% Keywords
 \renewcommand{\notesname}{Poznámky}% Footnotes
 \renewcommand{\notelabel}{Nota}%Note
+\Addlcwords{} %words that should be lowercase for titlecaps package
 
 %</czech>
 %    \end{macrocode}
@@ -3740,13 +3749,14 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7turkish.txt}
 %    \begin{macrocode}
 %<*turkish>
-\ProvidesFile{APA7turkish.txt}[2020/12/02 v1.02 apa7 configuration for Turkish]
+\ProvidesFile{APA7turkish.txt}[2020/12/21 v1.03 apa7configuration for Turkish]
 
 \renewcommand{\lastauthorseparator}{ve}% and
 \renewcommand{\acksname}{Yazar Notu}% Author Note
 \renewcommand{\keywordname}{Anahtar Kelimeler}% Keywords
 \renewcommand{\notesname}{Dipnotlar}% Footnotes
 \renewcommand{\notelabel}{Not}%Note
+\Addlcwords{} %words that should be lowercase for titlecaps package
 
 %</turkish>
 %    \end{macrocode}
