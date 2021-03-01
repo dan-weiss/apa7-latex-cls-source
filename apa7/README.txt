@@ -3,7 +3,7 @@
 apa7 - A LaTeX class for formatting documents in compliance with the
 American Psychological Association's Publication Manual, 7th edition
 
-Copyright (C) 2020 by Daniel A. Weiss <daniel.weiss.led at gmail.com>
+Copyright (C) 2021 by Daniel A. Weiss <daniel.weiss.led at gmail.com>
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License (LPPL), either
