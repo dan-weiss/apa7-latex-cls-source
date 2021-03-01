@@ -4,11 +4,11 @@
 %                                                                           %
 %    CHANGE THESE VALUES WITH EACH NEW RELEASE:                             %
 %                                                                           %
-%<class>\ProvidesClass{apa7}[2020/12/05 v2.07 APA formatting (7th edition)]
+%<class>\ProvidesClass{apa7}[2021/02/01 v2.08 APA formatting (7th edition)]
 %                                                                           %
 %<*internal>                                                                %
-\def\apaSevenVersionDate{2020/12/05}
-\def\apaSevenVersionNumber{2.07}
+\def\apaSevenVersionDate{2021/03/01}
+\def\apaSevenVersionNumber{2.08}
 %                                                                           %
 %                                                                           %
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -20,7 +20,7 @@
 apa7 - A LaTeX class for formatting documents in compliance with the
 American Psychological Association's Publication Manual, 7th edition
 
-Copyright (C) 2020 by Daniel A. Weiss <daniel.weiss.led at gmail.com>
+Copyright (C) 2021 by Daniel A. Weiss <daniel.weiss.led at gmail.com>
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License (LPPL), either
@@ -61,7 +61,7 @@ manuscript type has been added. See the documentation for details.
 apa7 - A LaTeX class for formatting documents in compliance with the
 American Psychological Association's Publication Manual, 7th edition
 
-Copyright (C) 2020 by Daniel A. Weiss <daniel.weiss.led at gmail.com>
+Copyright (C) 2021 by Daniel A. Weiss <daniel.weiss.led at gmail.com>
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License (LPPL), either
@@ -81,7 +81,7 @@ by, the American Psychological Association.
 \endpreamble
 \postamble
 
-Copyright (C) 2020 by Daniel A. Weiss <daniel.weiss.led at gmail.com>
+Copyright (C) 2021 by Daniel A. Weiss <daniel.weiss.led at gmail.com>
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License (LPPL), either
@@ -262,6 +262,8 @@ and the derived files           apa7.ins,
 % \changes{v2.06}{2020/12/02}{Added tablenote command. Added "Note." for table/figure notes to localization files. }
 %
 % \changes{v2.07}{2020/12/05}{Extended mask command to also mask in stu mode. }
+%
+% \changes{v2.08}{2021/03/01}{Updated BibLaTex to allow overriding bibliography title. }
 %
 % \begin{abstract}
 %   The \textit{Publication Manual} of the American Psychological
@@ -1222,9 +1224,9 @@ and the derived files           apa7.ins,
       \AtEndPreamble{%
         \@ifpackageloaded{biblatex}{%  the user has loaded biblatex
           \@ifundefined{def@man}{%
-            \defbibheading{bibliography}{\section*{\normalfont\textbf\refname}}%
+            \defbibheading{bibliography}[\refname]{\section*{\normalfont\textbf{#1}}}%
           }{%
-            \defbibheading{bibliography}{\clearpage\section*{\normalfont\textbf\refname}}%
+            \defbibheading{bibliography}[\refname]{\clearpage\section*{\normalfont\textbf{#1}}}%
           }
         }{}
       }
@@ -1233,9 +1235,9 @@ and the derived files           apa7.ins,
       \def\def@biblatex{\@biblatexmode}%  the selected bibliography package is Biblatex
       \RequirePackage[style=apa,sortcites=true,sorting=nyt,backend=biber]{biblatex}
       \@ifundefined{def@man}{%
-        \defbibheading{bibliography}{\section*{\normalfont\textbf\refname}}%
+        \defbibheading{bibliography}[\refname]{\section*{\normalfont\textbf{#1}}}%
       }{%
-        \defbibheading{bibliography}{\clearpage\section*{\normalfont\textbf\refname}}%
+        \defbibheading{bibliography}[\refname]{\clearpage\section*{\normalfont\textbf{#1}}}%
       }
       \ClassInfo{apa7}{The selected bibliography package, biblatex, has been loaded}
     }
@@ -2604,7 +2606,7 @@ and the derived files           apa7.ins,
        {}
        {%
          \vfill%
-        \section{\normalfont\normalsize\textbf\acksname}
+        \section*{\normalfont\normalsize\textbf\acksname}
          \raggedright
          \setlength{\parindent}{0.5in}
          \indent\@acks\par%
@@ -2635,7 +2637,7 @@ and the derived files           apa7.ins,
        {%
          \@ifundefined{apaSeven@maskauthoridentity}{%  BDB
            \vfill%
-           \section{\normalfont\normalsize\textbf\acksname}
+           \section*{\normalfont\normalsize\textbf\acksname}
            \raggedright
            \setlength{\parindent}{0.5in}
            \indent\@acks\par%
@@ -2648,7 +2650,7 @@ and the derived files           apa7.ins,
   %BDB\hyphenpenalty 10000
   \fussy
   \@ifundefined{@abstract}{}{%
-    \section{\normalfont\normalsize\textbf\abstractname}% BDB
+    \section*{\normalfont\normalsize\textbf\abstractname}% BDB
     \noindent\@abstract\par% BDB
     \@ifundefined{@keywords}{}{%
       \setlength{\parindent}{0.5in}% BDB
@@ -2658,7 +2660,7 @@ and the derived files           apa7.ins,
   }
 
   \@ifundefined{def@donotrepeattitle}{
-    \section{\protect\normalfont\textbf{\@title}}
+    \section*{\protect\normalfont\textbf{\@title}}
   }{}%
   \raggedright%
   \setlength{\parindent}{0.5in}%
