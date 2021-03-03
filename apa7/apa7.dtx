@@ -4,11 +4,11 @@
 %                                                                           %
 %    CHANGE THESE VALUES WITH EACH NEW RELEASE:                             %
 %                                                                           %
-%<class>\ProvidesClass{apa7}[2021/03/01 v2.08 APA formatting (7th edition)]
+%<class>\ProvidesClass{apa7}[2021/03/03 v2.09 APA formatting (7th edition)]
 %                                                                           %
 %<*internal>                                                                %
-\def\apaSevenVersionDate{2021/03/01}
-\def\apaSevenVersionNumber{2.08}
+\def\apaSevenVersionDate{2021/03/03}
+\def\apaSevenVersionNumber{2.09}
 %                                                                           %
 %                                                                           %
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -264,6 +264,8 @@ and the derived files           apa7.ins,
 % \changes{v2.07}{2020/12/05}{Extended mask command to also mask in stu mode. }
 %
 % \changes{v2.08}{2021/03/01}{Updated BibLaTex to allow overriding bibliography title. }
+%
+% \changes{v2.09}{2021/03/03}{Updated APA7endfloat.cfg file to use more modern DeclareDelayedFloatFlavor. This fixes the bug where longtable can be shown on the same page as another table. }
 %
 % \begin{abstract}
 %   The \textit{Publication Manual} of the American Psychological
@@ -2553,8 +2555,6 @@ and the derived files           apa7.ins,
   \let\BBAB\normal@BBAB% -- thp 2005/07/23
  \fi}
 
-
-
 %========== Alterations to captions (BDB) ===================
 
 \captionsetup{justification=raggedright}
@@ -3850,92 +3850,26 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\begin{macro}{APA7endfloat.cfg}
 %    \begin{macrocode}
 %<*APAendfloat>
+\ProvidesFile{APA7endfloat.cfg}[2021/03/03 v2.00 apa7 configuration endfloat]
 %%
 %% This is file `endfloat.cfg',
-%% modifed from the original supplied with the endfloat package
+%% modifed from the original supplied efxmpl.cfg with the endfloat package
 %% to handle both sideways floats and longtable
 %%
-%% Athanassios Protopapas <protopap@ilsp.gr>
-%% July 2005
-%%
-%% Original authors: James Darrell McCauley <jdm5548@diamond.tamu.edu>,
-%% Jeff Goldberg <j.goldberg@cranfield.ac.uk>
-%% Original version: Version 2.4i <October 1995>
+%% Description: LaTeX style to put figures and tables at end of article
+%% Keywords: LaTeX, style-option, float, figure, table
+%% Authors: James Darrell McCauley <jdm5548@diamond.tamu.edu>,
+%%          Jeff Goldberg <jeffrey@goldmark.org>,
+%%          Axel Sommerfeldt <axel.sommerfeldt@f-m.fm>
+%% Maintainer: -none-
+%% Latest Version: Version 2.7 <April 2019>
 %%
 \RequirePackage{rotating}
-\let\efsaved@sidewaysfigure\sidewaysfigure
-\let\efsaved@sidewaystable\sidewaystable
-\let\efsaved@longtable\longtable
-\AtBeginTables{\let\sidewaystable=\efsaved@sidewaystable\relax}
-\AtBeginTables{\let\longtable=\efsaved@longtable\relax}
-\AtBeginFigures{\let\sidewaysfigure=\efsaved@sidewaysfigure\relax}
-\def\sidewaystable{\efloat@condopen{ttt}
-    \efloat@iwrite{ttt}{\string\begin{sidewaystable}}%
-%    \if@domarkers
-%       \addtocounter{posttbl}{1}
-%       \tableplace
-%    \fi
-    \def\@currenvir{efloat@float}%
-    \begingroup
-    \let\do\ef@makeinnocent \dospecials
-    \ef@makeinnocent\^^L% and whatever other special cases
-    \endlinechar`\^^M \catcode`\^^M=12 \ef@xsidetable}
-{\catcode`\^^M=12 \endlinechar=-1 %
- \gdef\ef@xsidetable#1^^M{\def\test{#1}
-      \ifx\test\ef@endsidetabletest
-          \efloat@foundend{ttt}{sidewaystable}
-      \else
-          \efloat@iwrite{ttt}{#1}%
-          \let\next\ef@xsidetable
-      \fi \next}
-}
-\def\sidewaysfigure{\efloat@condopen{fff}
-    \efloat@iwrite{fff}{\string\begin{sidewaysfigure}}%
-%    \if@domarkers
-%       \addtocounter{postfig}{1}
-%       \figureplace
-%    \fi
-    \def\@currenvir{efloat@float}%
-    \begingroup
-    \let\do\ef@makeinnocent \dospecials
-    \ef@makeinnocent\^^L% and whatever other special cases
-    \endlinechar`\^^M \catcode`\^^M=12 \ef@xsidefigure}
-{\catcode`\^^M=12 \endlinechar=-1 %
- \gdef\ef@xsidefigure#1^^M{\def\test{#1}
-      \ifx\test\ef@endsidefiguretest
-          \efloat@foundend{fff}{sidewaysfigure}
-      \else
-          \efloat@iwrite{fff}{#1}%
-          \let\next\ef@xsidefigure
-      \fi \next}
-}
-\def\longtable{\efloat@condopen{ttt}
-    \efloat@iwrite{ttt}{\string\begin{longtable}}%
-%    \if@domarkers
-%       \addtocounter{posttbl}{1}
-%       \tableplace
-%    \fi
-    \def\@currenvir{efloat@float}%
-    \begingroup
-    \let\do\ef@makeinnocent \dospecials
-    \ef@makeinnocent\^^L% and whatever other special cases
-    \endlinechar`\^^M \catcode`\^^M=12 \ef@xlongtable}
-{\catcode`\^^M=12 \endlinechar=-1 %
- \gdef\ef@xlongtable#1^^M{\def\test{#1}
-      \ifx\test\ef@endlongtabletest
-          \efloat@foundend{ttt}{longtable}
-      \else
-          \efloat@iwrite{ttt}{#1}%
-          \let\next\ef@xlongtable
-      \fi \next}
-}
-{\escapechar=-1%
- \xdef\ef@endsidefiguretest{\string\\end\string\{sidewaysfigure\string\}}%
- \xdef\ef@endsidetabletest{\string\\end\string\{sidewaystable\string\}}
- \xdef\ef@endlongtabletest{\string\\end\string\{longtable\string\}}}%
-\endinput
-
-%</APAendfloat>
+\RequirePackage{longtable}
+\DeclareDelayedFloatFlavor{sidewaysfigure}{figure}
+\DeclareDelayedFloatFlavor{sidewaystable}{table}
+\DeclareDelayedFloatFlavor{longtable}{table}
+\endinput%</APAendfloat>
 %    \end{macrocode}
 %\end{macro}
 %
