@@ -4,11 +4,11 @@
 %                                                                           %
 %    CHANGE THESE VALUES WITH EACH NEW RELEASE:                             %
 %                                                                           %
-%<class>\ProvidesClass{apa7}[2021/03/03 v2.09 APA formatting (7th edition)]
+%<class>\ProvidesClass{apa7}[2021/03/04 v2.10 APA formatting (7th edition)]
 %                                                                           %
 %<*internal>                                                                %
-\def\apaSevenVersionDate{2021/03/03}
-\def\apaSevenVersionNumber{2.09}
+\def\apaSevenVersionDate{2021/03/04}
+\def\apaSevenVersionNumber{2.10}
 %                                                                           %
 %                                                                           %
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -266,6 +266,8 @@ and the derived files           apa7.ins,
 % \changes{v2.08}{2021/03/01}{Updated BibLaTex to allow overriding bibliography title. }
 %
 % \changes{v2.09}{2021/03/03}{Updated APA7endfloat.cfg file to use more modern DeclareDelayedFloatFlavor. This fixes the bug where longtable can be shown on the same page as another table. }
+%
+% \changes{v2.10}{2021/03/04}{Update BibLaTex instructions to remove DeclareLanguageMapping and remove commands that are no longer required. }
 %
 % \begin{abstract}
 %   The \textit{Publication Manual} of the American Psychological
@@ -788,9 +790,8 @@ and the derived files           apa7.ins,
 % \textit{\textbf{Note:} This is the recommended method for 7th edition citations and references.} \\
 % Biblatex is the most APA-compliant bibiliography package.  The
 % \DescribeMacro{biblatex}|biblatex| option directs \textsf{apa7} to
-% load the \textsf{biblatex} package with the following options:
-% style=apa,sortcites=true,sorting=nyt; however, the
-% |\DeclareLanguageMapping| and |\addbibresource| commands will need
+% load the \textsf{biblatex} package with the following option:
+% style=apa; however, the |\addbibresource| command will need
 % to be specified by the user within the document preamble.  In the
 % absence of bibliographic options, \textsf{apa7} will mask references
 % using \textsf{biblatex} commands if the |mask| option is specified.
@@ -915,8 +916,7 @@ and the derived files           apa7.ins,
  \usepackage[american]{babel}
 
  \usepackage{csquotes}
- \usepackage[style=apa,sortcites=true,sorting=nyt,backend=biber]{biblatex}
- \DeclareLanguageMapping{american}{american-apa}
+ \usepackage[style=apa,backend=biber]{biblatex}
  \addbibresource{bibliography.bib}
 
  \title{Sample APA-Style Document Using the \textsf{apa7} Package}
@@ -1235,7 +1235,7 @@ and the derived files           apa7.ins,
       \ClassInfo{apa7}{No bibliography package was specified; defaulting to (but not loading) Biblatex}
     }{%
       \def\def@biblatex{\@biblatexmode}%  the selected bibliography package is Biblatex
-      \RequirePackage[style=apa,sortcites=true,sorting=nyt,backend=biber]{biblatex}
+      \RequirePackage[style=apa,backend=biber]{biblatex}
       \@ifundefined{def@man}{%
         \defbibheading{bibliography}[\refname]{\section*{\normalfont\textbf{#1}}}%
       }{%
@@ -3411,8 +3411,7 @@ and the derived files           apa7.ins,
 \usepackage[american]{babel}
 
 \usepackage{csquotes}
-\usepackage[style=apa,sortcites=true,sorting=nyt,backend=biber]{biblatex}
-\DeclareLanguageMapping{american}{american-apa}
+\usepackage[style=apa,backend=biber]{biblatex}
 \addbibresource{bibliography.bib}
 
 \title{Sample APA-Style Document Using the \textsf{apa7} Package}
@@ -3528,8 +3527,7 @@ skill in interpreting the results for the masses.
 \usepackage[american]{babel}
 
 \usepackage{csquotes}
-\usepackage[style=apa,sortcites=true,sorting=nyt,backend=biber]{biblatex}
-\DeclareLanguageMapping{american}{american-apa}
+\usepackage[style=apa,backend=biber]{biblatex}
 \addbibresource{bibliography.bib}
 
 \title{Sample APA-Style Document Using the \textsf{apa7} Package}
