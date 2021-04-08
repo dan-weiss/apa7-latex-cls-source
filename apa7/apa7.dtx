@@ -2248,6 +2248,8 @@ and the derived files           apa7.ins,
 \def\apaSevenapptab{%
  \renewcommand\thetable{\theappendix\@arabic\c@table}%
  \ifapamodeman{\renewcommand\theposttbl{\theappendix\arabic{posttbl}}}{}}
+\def\apaSevenappeq{%
+ \renewcommand\theequation{\theappendix\@arabic\c@equation}}
 \newif\ifoneappendix
 \oneappendixtrue % one appendix by default
 \newif\ifappendix
@@ -2260,6 +2262,7 @@ and the derived files           apa7.ins,
   \appendixtrue
   \apaSevenappfig
   \apaSevenapptab
+  \apaSevenappeq
 %  \ifapamodejou{}{\clearpage} %% commented out -- thp 2005/07/23
   \let\old@apaSeven@section=\section % This will not work right with five levels in appendix.
                                  % Should go into \section, not \leveltwo but would also require
@@ -2290,6 +2293,7 @@ and the derived files           apa7.ins,
                    }%
                     \setcounter{figure}{0}%
                     \setcounter{table}{0}%
+                    \setcounter{equation}{0}%
                     \vskip2.5ex%
 %                  \addtocounter{appendix}{1}%
                    \refstepcounter{appendix}% 2002/07/20 this takes care of references too
