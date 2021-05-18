@@ -4,11 +4,11 @@
 %                                                                           %
 %    CHANGE THESE VALUES WITH EACH NEW RELEASE:                             %
 %                                                                           %
-%<class>\ProvidesClass{apa7}[2021/04/08 v2.12 APA formatting (7th edition)]
+%<class>\ProvidesClass{apa7}[2021/05/17 v2.13 APA formatting (7th edition)]
 %                                                                           %
 %<*internal>                                                                %
-\def\apaSevenVersionDate{2021/04/08}
-\def\apaSevenVersionNumber{2.12}
+\def\apaSevenVersionDate{2021/05/17}
+\def\apaSevenVersionNumber{2.13}
 %                                                                           %
 %                                                                           %
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -272,6 +272,8 @@ and the derived files           apa7.ins,
 % \changes{v2.11}{2021/04/05}{Updated linebreaks in caption separators to prevent warning. }
 %
 % \changes{v2.12}{2021/04/08}{Reset equation counter for every appendix (like for figures and tables). Thanks mmrabe. }
+%
+% \changes{v2.13}{2021/05/17}{Fix headers for jou style when journal command is provided. }
 %
 % \begin{abstract}
 %   The \textit{Publication Manual} of the American Psychological
@@ -1941,7 +1943,7 @@ and the derived files           apa7.ins,
 \long\def\keywords#1{\long\def\@keywords{#1}}
 %\long\def\acknowledgements#1{\long\def\@acks{#1}}
 \long\def\authornote#1{\long\def\@acks{#1}}
-\def\journal#1{\RequirePackage{fancyhdr}\def\@journal{#1}}
+\def\journal#1{\def\@journal{#1}}
 \def\volume#1{\def\@vvolume{#1}}
 \def\ccoppy#1{\def\@ccoppy{#1}}
 \def\copnum#1{\def\@copnum{#1}}
@@ -2777,6 +2779,8 @@ and the derived files           apa7.ins,
 
 \@ifundefined{def@jou}{}{%
 
+\RequirePackage{fancyhdr}
+
 \renewcommand{\addORCIDlink}[2]{\href{https://orcid.org/#2}{{\mbox{\scalerel*{
 \begin{tikzpicture}[yscale=-1,transform shape]
 \pic{orcidlogo};
@@ -2846,28 +2850,22 @@ and the derived files           apa7.ins,
   }
   \end{center}
  ] % end of \twocolumn[]
+ 
+ \renewcommand{\headrulewidth}{0pt}%
 
  \pagenumbering{arabic}
  \@ifundefined{@journal}{\thispagestyle{empty}}{%
   \@ifundefined{@vvolume}{\def\@vvolume{\strut}}{}%
   \@ifundefined{@copnum}{\def\@copnum{\strut}}{}%
   \@ifundefined{@ccoppy}{\def\@ccoppy{\strut}}{}%
-  \fancyhead{}
-  \fancyhead[LO]{\stiny{\@journal}\vspace{-0.15\baselineskip}\\
-                 \stiny{\@vvolume}}
-  \fancyhead[RO]{\stiny{\@ccoppy}\vspace{-0.15\baselineskip}\\
-                 \stiny{\@copnum}}
-  \fancyfoot[CO]{\small\rm\thepage}
-  % the following are needed if the starting page number is changed to
-  % an even number:
-  \fancyhead[LE]{\stiny{\@journal}\vspace{-0.15\baselineskip}\\
-                 \stiny{\@vvolume}}
-  \fancyhead[RE]{\stiny{\@ccoppy}\vspace{-0.15\baselineskip}\\
-                 \stiny{\@copnum}}
-  \fancyfoot[CE]{\small\rm\thepage}
-  \renewcommand{\headrulewidth}{0pt}
-  \renewcommand{\footrulewidth}{0pt}
-  \thispagestyle{fancy}
+  \fancypagestyle{pageone}{%
+    \fancyhf{}%
+    \fancyhead[L]{\stiny{\@journal}\vspace{-0.15\baselineskip}\\
+                 \stiny{\@vvolume}}%
+    \fancyhead[R]{\stiny{\@ccoppy}\vspace{-0.15\baselineskip}\\
+                 \stiny{\@copnum}}%
+  }
+  \thispagestyle{pageone}
  }
 
   \@ifundefined{apaSeven@maskauthoridentity}{%  BDB
@@ -2881,11 +2879,6 @@ and the derived files           apa7.ins,
   }{%  mask author identity -- show nothing in the author note space
   }
 
-  \@ifundefined{apaSeven@maskauthoridentity}{%  BDB
-     \markboth{\hfill\r@headl\hfill}{\hfill\r@headr\hfill}
-  }{%  mask author identity -- show the short title for both the left and right headers
-     \markboth{\hfill\r@headr\hfill}{\hfill\r@headr\hfill}
-  }
  \@ifundefined{no@tab}{\let\tabular\apaSeventabular}{}
  %\noindent
 }
@@ -2912,16 +2905,25 @@ and the derived files           apa7.ins,
 
 \setcounter{secnumdepth}{0}
 
-\def\ps@myheadings{%
-  \let\@mkboth\@gobbletwo
-  \def\@oddhead{\hbox{}\rightmark \hfil\rm\thepage}
-  \def\@oddfoot{}
-  \def\@evenhead{\rm\thepage\hfil\leftmark\hbox{}}
-  \def\@evenfoot{}
+ \fancypagestyle{journalbase}{%
+  \fancyhf{}%
+  \fancyhead[LE]{\thepage}%
+  \fancyhead[RO]{\thepage}%
+  \fancyhead[CO]{\r@headr}%
   \def\sectionmark##1{}
   \def\subsectionmark##1{}
 }
-\pagestyle{myheadings}
+
+\@ifundefined{apaSeven@maskauthoridentity}{%  BDB
+    \fancypagestyle{journal}[journalbase]{%
+      \fancyhead[CE]{\r@headl}%
+    }
+}{%  mask author identity -- show the short title for both the left and right headers
+    \fancypagestyle{journal}[journalbase]{%
+      \fancyhead[CE]{\r@headr}%
+    }
+ }
+ \pagestyle{journal}
 
 %\long\def\@makecaption#1#2{%
 %  \let\BBAB\table@BBAB % thp 2005/07/23
