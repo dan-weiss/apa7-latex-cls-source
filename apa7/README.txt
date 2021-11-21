@@ -26,3 +26,10 @@ altered the formatting guidelines and therefore rendered existing
 formatting solutions inadequate.  The apa7 class is an update of
 older code from the apa6 class (available from CTAN).  The student
 manuscript type has been added. See the documentation for details.
+
+----------------------------------------------------------------------
+
+Installation Notes:
+1. Create directory "config" next to the file apa7.ins
+2. Run latex apa7.ins
+3. Move/copy apa7.cls to the directory of your latex install or the directory containing your latex project.

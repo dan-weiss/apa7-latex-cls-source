@@ -4,10 +4,10 @@
 %                                                                           %
 %    CHANGE THESE VALUES WITH EACH NEW RELEASE:                             %
 %                                                                           %
-%<class>\ProvidesClass{apa7}[2021/08/08 v2.14 APA formatting (7th edition)]
+%<class>\ProvidesClass{apa7}[2021/11/21 v2.14 APA formatting (7th edition)]
 %                                                                           %
 %<*internal>                                                                %
-\def\apaSevenVersionDate{2021/08/08}
+\def\apaSevenVersionDate{2021/11/21}
 \def\apaSevenVersionNumber{2.14}
 %                                                                           %
 %                                                                           %
@@ -43,6 +43,13 @@ altered the formatting guidelines and therefore rendered existing
 formatting solutions inadequate.  The apa7 class is an update of
 older code from the apa6 class (available from CTAN).  The student 
 manuscript type has been added. See the documentation for details.
+
+----------------------------------------------------------------------
+
+Installation Notes:
+1. Create directory "config" next to the file apa7.ins
+2. Run latex apa7.ins
+3. Move/copy apa7.cls to the directory of your latex install or the directory containing your latex project.
 %</readme>
 %<*internal>
 \fi
@@ -277,7 +284,7 @@ and the derived files           apa7.ins,
 %
 % \changes{v2.13}{2021/05/17}{Fix headers for jou style when journal command is provided. }
 %
-% \changes{v2.14}{2021/08/08}{Added Spanish localization. }
+% \changes{v2.14}{2021/08/08}{Added Spanish localization. Fixed compatibility with Version 4.0 of flushend.sty. Clarify installation in readme. }
 %
 % \begin{abstract}
 %   The \textit{Publication Manual} of the American Psychological
@@ -2793,10 +2800,7 @@ and the derived files           apa7.ins,
 
 %========== balance last-page columns =================
 
-% need the `keeplastbox' option to allow final reference to be
-% properly indented on the final line
-% https://tex.stackexchange.com/questions/198287/reference-and-biography-indentation-issue
-\IfFileExists{flushend.sty}{\RequirePackage[keeplastbox]{flushend}}{}
+\IfFileExists{flushend.sty}{\RequirePackage{flushend}}{}
 
 %========== ftnright and alterations ==================
 
