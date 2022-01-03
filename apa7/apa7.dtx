@@ -4,11 +4,11 @@
 %                                                                           %
 %    CHANGE THESE VALUES WITH EACH NEW RELEASE:                             %
 %                                                                           %
-%<class>\ProvidesClass{apa7}[2021/11/21 v2.14 APA formatting (7th edition)]
+%<class>\ProvidesClass{apa7}[2022/01/03 v2.15 APA formatting (7th edition)]
 %                                                                           %
 %<*internal>                                                                %
-\def\apaSevenVersionDate{2021/11/21}
-\def\apaSevenVersionNumber{2.14}
+\def\apaSevenVersionDate{2022/01/03}
+\def\apaSevenVersionNumber{2.15}
 %                                                                           %
 %                                                                           %
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -20,7 +20,7 @@
 apa7 - A LaTeX class for formatting documents in compliance with the
 American Psychological Association's Publication Manual, 7th edition
 
-Copyright (C) 2021 by Daniel A. Weiss <daniel.weiss.led at gmail.com>
+Copyright (C) 2022 by Daniel A. Weiss <daniel.weiss.led at gmail.com>
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License (LPPL), either
@@ -68,7 +68,7 @@ Installation Notes:
 apa7 - A LaTeX class for formatting documents in compliance with the
 American Psychological Association's Publication Manual, 7th edition
 
-Copyright (C) 2021 by Daniel A. Weiss <daniel.weiss.led at gmail.com>
+Copyright (C) 2022 by Daniel A. Weiss <daniel.weiss.led at gmail.com>
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License (LPPL), either
@@ -88,7 +88,7 @@ by, the American Psychological Association.
 \endpreamble
 \postamble
 
-Copyright (C) 2021 by Daniel A. Weiss <daniel.weiss.led at gmail.com>
+Copyright (C) 2022 by Daniel A. Weiss <daniel.weiss.led at gmail.com>
 
 This work may be distributed and/or modified under the
 conditions of the LaTeX Project Public License (LPPL), either
@@ -286,6 +286,8 @@ and the derived files           apa7.ins,
 %
 % \changes{v2.14}{2021/08/08}{Added Spanish localization. Fixed compatibility with Version 4.0 of flushend.sty. Clarify installation in readme. }
 %
+% \changes{v2.15}{2022/01/03}{Spacing updated to more closely match APA 7th Edition Manual.}
+%
 % \begin{abstract}
 %   The \textit{Publication Manual} of the American Psychological
 %   Association is widely used in the social sciences.  The most
@@ -369,10 +371,8 @@ and the derived files           apa7.ins,
 %   main one.
 % \item \DescribeMacro{donotrepeattitle}|donotrepeattitle|: Suppress the title above the 
 %   introduction (in case a different title is desired).
-% \item \DescribeMacro{noextraspace}|noextraspace|: In |man| and |stu| mode,
-%   removes some of the vertical space between certain elements (e.g.,
-%   headers and text) in an attempt to more closely resemble true
-%   double-spacing (use at your own risk).
+% \item \DescribeMacro{noextraspace}|noextraspace|: Removed option in version 2.15
+%  in an attempt to more closely match APA 7th edition guidelines (will throw error if used).
 % \item \DescribeMacro{floatsintext}|floatsintext|: In |man| and |stu| mode,
 %   integrates floats (tables and figures) within the body of the text
 %   instead of postponing them until after the reference list.
@@ -1142,7 +1142,7 @@ and the derived files           apa7.ins,
 
 % remove extra space around headings, etc., in man mode
 \DeclareOption{noextraspace}{%
-  \def\def@noextraspace{\@noextraspacemode}
+  \ClassError{apa7}{Option removed: no longer uses as of version  2.15}{Spacing updated to more closely match APA 7th Edition Manual}
 }
 
 % suppress the title at the introduction (in case a different title is desired)
@@ -1755,14 +1755,12 @@ and the derived files           apa7.ins,
 \newskip\e@level@two@skip   \e@level@two@skip=1.5ex plus .6ex minus .1ex
 \newskip\b@level@three@skip \b@level@three@skip=2.0ex plus .8ex minus .2ex
 \newskip\e@level@three@skip \e@level@three@skip=1.5ex plus .6ex minus .1ex
-\newskip\b@level@four@skip  \b@level@four@skip=1.8ex plus .8ex minus .2ex
-\newskip\e@level@four@skip  \e@level@four@skip=1.5ex plus .6ex minus .1ex
-\newskip\b@level@five@skip  \b@level@five@skip=1.8ex plus .8ex minus .2ex
-\newskip\e@level@five@skip  \e@level@five@skip=0ex
+\newskip\b@level@four@skip  \b@level@four@skip=0\baselineskip \@plus 0.2ex \@minus 0.2ex
+\newskip\e@level@four@skip  \e@level@four@skip=-0.5em
+\newskip\b@level@five@skip  \b@level@five@skip=0\baselineskip \@plus 0.2ex \@minus 0.2ex
+\newskip\e@level@five@skip  \e@level@five@skip=-0.5em
 
 \ifapamodeman{%
-  \@ifundefined{def@noextraspace}{}{%
-    % redefine the vertical section spacing
     \b@level@one@skip=0.2\baselineskip \@plus 0.2ex \@minus 0.2ex
     \e@level@one@skip=0.2\baselineskip \@plus .2ex
     \b@level@two@skip=0.2\baselineskip \@plus 0.2ex \@minus 0.2ex
@@ -1770,13 +1768,10 @@ and the derived files           apa7.ins,
     \b@level@three@skip=0.2\baselineskip \@plus 0.2ex \@minus 0.2ex
     \e@level@three@skip=0.2\baselineskip \@plus 0.2ex
     \b@level@four@skip=0\baselineskip \@plus 0.2ex \@minus 0.2ex
-    \e@level@four@skip=-\z@
+    \e@level@four@skip=-0.5em
     \b@level@five@skip=0\baselineskip \@plus 0.2ex \@minus 0.2ex
-    \e@level@five@skip=0ex
-  }
+    \e@level@five@skip=-0.5em
 }{}
-
-
 
 %========== APA Section heading & seriation, adapted from class apa6e
 
@@ -1833,13 +1828,13 @@ and the derived files           apa7.ins,
     {\normalfont\normalsize\bfseries\itshape}}
 
 \renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
-    {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
-    {-1em}%
+    {\b@level@four@skip}%
+    {\e@level@four@skip}%
     {\normalfont\normalsize\bfseries\typesectitle}}
 
 \renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
-    {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
-    {-\z@\relax}%
+    {\b@level@five@skip}%
+    {\e@level@five@skip}%
     {\normalfont\normalsize\bfseries\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
 
 % make the References section non-boldface
@@ -2601,9 +2596,7 @@ and the derived files           apa7.ins,
   \vspace*{4\baselineskip}
   \textbf\@title%
   \ifapamodeman{%
-    \@ifundefined{def@noextraspace}{%
-      \vspace{\baselineskip}\\
-    }{\\}
+    \vspace{\baselineskip}\\
   }{%
     \vspace{\baselineskip}\\
   }
