@@ -123,6 +123,7 @@ and the derived files           apa7.ins,
                                 APA7czech.txt,
                                 APA7turkish.txt,
                                 APA7spanish.txt,
+                                APA7hungarian.txt,
                                 APA7endfloat.cfg,
                                 Figure1.pdf,
                                 shortsample.tex,
@@ -147,6 +148,7 @@ and the derived files           apa7.ins,
   \file{./config/APA7czech.txt}{\from{\jobname.dtx}{czech}}
   \file{./config/APA7turkish.txt}{\from{\jobname.dtx}{turkish}}
   \file{./config/APA7spanish.txt}{\from{\jobname.dtx}{spanish}}
+  \file{./config/APA7hungarian.txt}{\from{\jobname.dtx}{hungarian}}
   \file{./config/APA7endfloat.cfg}{\from{\jobname.dtx}{APAendfloat}}
 }
 \usedir{tex/latex/apa7/samples}
@@ -3868,6 +3870,23 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %Note
 
 %</spanish>
+%    \end{macrocode}
+%\end{macro}
+%
+%
+%\begin{macro}{APA7hungarian.txt}
+%    \begin{macrocode}
+%<*hungarian>
+\ProvidesFile{APA7hungarian.txt}[2022/07/25 APA7 configuration for Hungarian - added by Robert Fodor]
+
+\renewcommand{\lastauthorseparator}{és}% and
+\renewcommand{\acksname}{Szerzői megjegyzés}% Author Note
+\renewcommand{\keywordname}{Kulcsszavak}% Keywords
+\renewcommand{\notesname}{Lábjegyzet}% Footnotes
+\renewcommand{\notelabel}{Megjegyzés}% Note
+%Note
+
+%</hungarian>
 %    \end{macrocode}
 %\end{macro}
 %
