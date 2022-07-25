@@ -4,11 +4,11 @@
 %                                                                           %
 %    CHANGE THESE VALUES WITH EACH NEW RELEASE:                             %
 %                                                                           %
-%<class>\ProvidesClass{apa7}[2022/01/03 v2.15 APA formatting (7th edition)]
+%<class>\ProvidesClass{apa7}[2022/07/25 v2.16 APA formatting (7th edition)]
 %                                                                           %
 %<*internal>                                                                %
-\def\apaSevenVersionDate{2022/01/03}
-\def\apaSevenVersionNumber{2.15}
+\def\apaSevenVersionDate{2022/07/25}
+\def\apaSevenVersionNumber{2.16}
 %                                                                           %
 %                                                                           %
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -123,6 +123,7 @@ and the derived files           apa7.ins,
                                 APA7czech.txt,
                                 APA7turkish.txt,
                                 APA7spanish.txt,
+                                APA7hungarian.txt,
                                 APA7endfloat.cfg,
                                 Figure1.pdf,
                                 shortsample.tex,
@@ -147,6 +148,7 @@ and the derived files           apa7.ins,
   \file{./config/APA7czech.txt}{\from{\jobname.dtx}{czech}}
   \file{./config/APA7turkish.txt}{\from{\jobname.dtx}{turkish}}
   \file{./config/APA7spanish.txt}{\from{\jobname.dtx}{spanish}}
+  \file{./config/APA7hungarian.txt}{\from{\jobname.dtx}{hungarian}}
   \file{./config/APA7endfloat.cfg}{\from{\jobname.dtx}{APAendfloat}}
 }
 \usedir{tex/latex/apa7/samples}
@@ -287,6 +289,8 @@ and the derived files           apa7.ins,
 % \changes{v2.14}{2021/08/08}{Added Spanish localization. Fixed compatibility with Version 4.0 of flushend.sty. Clarify installation in readme. }
 %
 % \changes{v2.15}{2022/01/03}{Spacing updated to more closely match APA 7th Edition Manual.}
+%
+% \changes{v2.16}{2022/07/25}{Add Hungarian localization.}
 %
 % \begin{abstract}
 %   The \textit{Publication Manual} of the American Psychological
@@ -3868,6 +3872,23 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %Note
 
 %</spanish>
+%    \end{macrocode}
+%\end{macro}
+%
+%
+%\begin{macro}{APA7hungarian.txt}
+%    \begin{macrocode}
+%<*hungarian>
+\ProvidesFile{APA7hungarian.txt}[2022/07/25 v1.00 apa7 configuration for Hungarian - added by Robert Fodor]
+
+\renewcommand{\lastauthorseparator}{és}% and
+\renewcommand{\acksname}{Szerzői megjegyzés}% Author Note
+\renewcommand{\keywordname}{Kulcsszavak}% Keywords
+\renewcommand{\notesname}{Lábjegyzet}% Footnotes
+\renewcommand{\notelabel}{Megjegyzés}% Note
+%Note
+
+%</hungarian>
 %    \end{macrocode}
 %\end{macro}
 %
