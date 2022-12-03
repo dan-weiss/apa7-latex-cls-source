@@ -4,11 +4,11 @@
 %                                                                           %
 %    CHANGE THESE VALUES WITH EACH NEW RELEASE:                             %
 %                                                                           %
-%<class>\ProvidesClass{apa7}[2022/07/25 v2.16 APA formatting (7th edition)]
+%<class>\ProvidesClass{apa7}[2022/12/03 v2.17 APA formatting (7th edition)]
 %                                                                           %
 %<*internal>                                                                %
-\def\apaSevenVersionDate{2022/07/25}
-\def\apaSevenVersionNumber{2.16}
+\def\apaSevenVersionDate{2022/12/03}
+\def\apaSevenVersionNumber{2.17}
 %                                                                           %
 %                                                                           %
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -112,18 +112,18 @@ and the derived files           apa7.ins,
                                 apa7.cls,
                                 apa7.pdf,
                                 README,
-                                APA7american.txt,
-                                APA7british.txt,
-                                APA7dutch.txt,
-                                APA7english.txt,
-                                APA7french.txt,
-                                APA7german.txt,
-                                APA7ngerman.txt,
-                                APA7greek.txt,
-                                APA7czech.txt,
-                                APA7turkish.txt,
-                                APA7spanish.txt,
-                                APA7hungarian.txt,
+                                apa7-american.trsl,
+                                apa7-british.trsl,
+                                apa7-czech.trsl,
+                                apa7-dutch.trsl,
+                                apa7-english.trsl,
+                                apa7-french.trsl,
+                                apa7-german.trsl,
+                                apa7-greek.trsl,
+                                apa7-hungarian.trsl,
+                                apa7-ngerman.trsl,
+                                apa7-spanish.trsl,
+                                apa7-turkish.trsl,
                                 APA7endfloat.cfg,
                                 Figure1.pdf,
                                 shortsample.tex,
@@ -134,21 +134,21 @@ and the derived files           apa7.ins,
 \usedir{tex/latex/apa7}
 \generate{
   \file{\jobname.cls}{\from{\jobname.dtx}{class}}
+  \file{apa7-american.trsl}{\from{\jobname.dtx}{american}}
+  \file{apa7-british.trsl}{\from{\jobname.dtx}{british}}
+  \file{apa7-czech.trsl}{\from{\jobname.dtx}{czech}}
+  \file{apa7-dutch.trsl}{\from{\jobname.dtx}{dutch}}
+  \file{apa7-english.trsl}{\from{\jobname.dtx}{english}}
+  \file{apa7-french.trsl}{\from{\jobname.dtx}{french}}
+  \file{apa7-german.trsl}{\from{\jobname.dtx}{german}}
+  \file{apa7-greek.trsl}{\from{\jobname.dtx}{greek}}
+  \file{apa7-hungarian.trsl}{\from{\jobname.dtx}{hungarian}}
+  \file{apa7-ngerman.trsl}{\from{\jobname.dtx}{ngerman}}
+  \file{apa7-spanish.trsl}{\from{\jobname.dtx}{spanish}}
+  \file{apa7-turkish.trsl}{\from{\jobname.dtx}{turkish}}
 }
 \usedir{tex/latex/apa7/config}
 \generate{
-  \file{./config/APA7american.txt}{\from{\jobname.dtx}{american}}
-  \file{./config/APA7british.txt}{\from{\jobname.dtx}{british}}
-  \file{./config/APA7dutch.txt}{\from{\jobname.dtx}{dutch}}
-  \file{./config/APA7english.txt}{\from{\jobname.dtx}{english}}
-  \file{./config/APA7french.txt}{\from{\jobname.dtx}{french}}
-  \file{./config/APA7german.txt}{\from{\jobname.dtx}{german}}
-  \file{./config/APA7ngerman.txt}{\from{\jobname.dtx}{ngerman}}
-  \file{./config/APA7greek.txt}{\from{\jobname.dtx}{greek}}
-  \file{./config/APA7czech.txt}{\from{\jobname.dtx}{czech}}
-  \file{./config/APA7turkish.txt}{\from{\jobname.dtx}{turkish}}
-  \file{./config/APA7spanish.txt}{\from{\jobname.dtx}{spanish}}
-  \file{./config/APA7hungarian.txt}{\from{\jobname.dtx}{hungarian}}
   \file{./config/APA7endfloat.cfg}{\from{\jobname.dtx}{APAendfloat}}
 }
 \usedir{tex/latex/apa7/samples}
@@ -291,6 +291,8 @@ and the derived files           apa7.ins,
 % \changes{v2.15}{2022/01/03}{Spacing updated to more closely match APA 7th Edition Manual.}
 %
 % \changes{v2.16}{2022/07/25}{Add Hungarian localization.}
+%
+% \changes{v2.17}{2022/12/03}{Use tracklang and translations packages to provide translations. Also update Dutch translation.}
 %
 % \begin{abstract}
 %   The \textit{Publication Manual} of the American Psychological
@@ -915,6 +917,8 @@ and the derived files           apa7.ins,
 %   table with notes.
 % \item \textsf{tikz}: needed for ORCID logo
 % \item \textsf{times}: for math definitions
+% \item \textsf{tracklang}: needed to detect requested languages
+% \item \textsf{translations}: for translating strings
 % \end{itemize}
 %
 %
@@ -934,7 +938,7 @@ and the derived files           apa7.ins,
  \begin{verbnobox}[\hspace{-3cm}]
  \documentclass[jou]{apa7}
 
- \usepackage[american]{babel}
+ \usepackage[hungarian,british]{babel}
 
  \usepackage{csquotes}
  \usepackage[style=apa,backend=biber]{biblatex}
@@ -942,8 +946,8 @@ and the derived files           apa7.ins,
 
  \title{Sample APA-Style Document Using the \textsf{apa7} Package}
 
- \author{Daniel A. Weiss}
- \affiliation{A University Somewhere}
+ \authorsnames{Daniel A. Weiss}
+ \authorsaffiliations{Departement of Psychology, A University Somewhere}
 
  \leftheader{Weiss}
 
@@ -954,21 +958,28 @@ and the derived files           apa7.ins,
 
  \keywords{APA style, demonstration}
 
+ \authornote{\addORCIDlink{Daniel A. Weiss}{0000-0000-0000-0000}, Department of Psychology, A University Somewhere
+
+ Changes of Affiliations and other info here to describe what needs to be said}
+
  \begin{document}
  \maketitle
  We begin with \textcite{Shotton1989}.  We can also cite this work in
- parenthesis, like this: \parencite{Shotton1989}.
-
- A three-author paper \parencite[e.g.,][]{Lassen2006} lists all
- three authors for the first citation, then only the first author
- on all subsequent citations \parencite{Lassen2006}.
+ parenthesis, like this: \parencite{Lassen2006}.
 
  Note the use of five heading levels throughout this demonstration
  Method section.
 
  \section{Method}
  \subsection{Participants}
- We had a lot of people in this study.
+ We had a lot of people in this study, show in Figure \ref{fig:Figure1}.
+
+ \begin{figure}[!htp]
+     \caption{This is my figure caption.}
+     \includegraphics[bb=0in 0in 2.5in 2.5in, height=1.4in, width=1.4in]{Figure1.pdf}
+     \foreignlanguage{hungarian}{\figurenote{This is an awesome figure with a Hungarian note label.}}
+     \label{fig:Figure1}
+ \end{figure}
 
  \subsection{Materials}
  Several materials were used for this project.  Some of them were
@@ -1236,14 +1247,13 @@ and the derived files           apa7.ins,
   \fi
 }
 
-
+\RequirePackage{etoolbox}
 
 % determine the bibliography package, and load it if selected through the appropriate \documentclass option
 \@ifundefined{def@apacite}{%
   \@ifundefined{def@natbib}{%
     \@ifundefined{def@biblatex}{%
       \def\def@biblatex{\@biblatexmode}%  the default bibliography package is biblatex
-      \RequirePackage{etoolbox}
       \AtEndPreamble{%
         \@ifpackageloaded{biblatex}{%  the user has loaded biblatex
           \@ifundefined{def@man}{%
@@ -1478,29 +1488,22 @@ and the derived files           apa7.ins,
 % Language-specific definition of strings is handled externally -- thp 2005/12/30
 % Based on handling of the same issue in apacite.sty
 
+\RequirePackage{translations}
+
 % First define the default American English macros in case no external file is present or needed
-\def\lastauthorseparator{and}
-\def\acksname{Author Note}
-\def\keywordname{Keywords}
-\def\notesname{Footnotes}
-\def\notelabel{Note}
+\DeclareTranslationFallback{lastauthorseparator}{and}
+\DeclareTranslationFallback{acksname}{Author Note}
+\DeclareTranslationFallback{keywordname}{Keywords}
+\DeclareTranslationFallback{notesname}{Footnotes}
+\DeclareTranslationFallback{notelabel}{Note}
 
-\AtBeginDocument{% so that we know what language is active in babel
+\AtEndPreamble{%
+  \RequirePackage{tracklang}%
+  \TrackLangShowVerbosetrue
 
-% \typeout{\string\languagename\space is\space\languagename}
-% \@ifundefined{iflanguage}% this is defined by babel, so it means babel is loaded
-                           % Unfortunately, because babel is built into the format
-                           % in modern distributions, \iflanguage is defined and
-                           % \languagename contains whichever language happens to be
-                           % last in the definition list, whether or not the babel
-                           % package is loaded by the current document
-
-\@ifpackageloaded{babel}% this is defined only if the user requested loading babel
-  {\def\@apaSeven@langfile{config/APA7\languagename.txt}}
-  {\def\@apaSeven@langfile{config/APA7american.txt}}
- \InputIfFileExists{\@apaSeven@langfile}{}{%
-  \ClassInfo{apa7}{Language definition file \@apaSeven@langfile\space not found}
- }%
+  \ForEachTrackedDialect{\thisdialect}{%
+    \LoadDictionaryFor{\thisdialect}{apa7}%
+  }
 }
 
 %========== Load babel if required ===================
@@ -1880,10 +1883,10 @@ and the derived files           apa7.ins,
 %
 %=============================================================
 
-\newcommand{\figurenote}[1]{\par \small \textit{\notelabel.} {#1}}
+\newcommand{\figurenote}[1]{\par \small \textit{\GetTranslation{notelabel}.} {#1}}
 \newcommand{\tablenote}[1]{\begin{tablenotes}[para,flushleft]
         {\small
-            \textit{\notelabel.} {#1}
+            \textit{\GetTranslation{notelabel}.} {#1}
          }
     \end{tablenotes}}
 
@@ -2026,7 +2029,7 @@ and the derived files           apa7.ins,
     \renewcommand{\lastauthor}{%
       \renewcommand{\authorsep}{, 
         \renewcommand*{\prelastauthorsep}{,}}%
-      \renewcommand{\prelastauthor}{\prelastauthorsep\ \lastauthorseparator\ }% Terminated commands with \ to preserve following space
+      \renewcommand{\prelastauthor}{\prelastauthorsep\ \GetTranslation{lastauthorseparator}\ }% Terminated commands with \ to preserve following space
       ##1%
     }%
       }%
@@ -2038,7 +2041,7 @@ and the derived files           apa7.ins,
     \renewcommand{\lastauthor}{%
       \renewcommand{\authorsep}{, 
         \renewcommand*{\prelastauthorsep}{,}}%
-      \renewcommand{\prelastauthor}{\prelastauthorsep\ \lastauthorseparator\ }% Terminated commands with \ to preserve following space
+      \renewcommand{\prelastauthor}{\prelastauthorsep\ \GetTranslation{lastauthorseparator}\ }% Terminated commands with \ to preserve following space
       ##1\textsuperscript{##2}%
     }%
   }%
@@ -2489,7 +2492,6 @@ and the derived files           apa7.ins,
   }%
 
 % for rotated tables, per Ulrike Fischer:  http://tex.stackexchange.com/a/79843
-  \RequirePackage{etoolbox}
   \AtEndPreamble{%
     \@ifpackageloaded{rotating}{%
       \DeclareDelayedFloatFlavor{sidewaystable}{table}
@@ -2624,7 +2626,7 @@ and the derived files           apa7.ins,
        {}
        {%
          \vfill%
-        \section*{\normalfont\normalsize\textbf\acksname}
+        \section*{\normalfont\normalsize\textbf\noexpand\GetTranslation{acksname}}
          \raggedright
          \setlength{\parindent}{0.5in}
          \indent\@acks\par%
@@ -2655,7 +2657,7 @@ and the derived files           apa7.ins,
        {%
          \@ifundefined{apaSeven@maskauthoridentity}{%  BDB
            \vfill%
-           \section*{\normalfont\normalsize\textbf\acksname}
+           \section*{\normalfont\normalsize\textbf\noexpand\GetTranslation{acksname}}
            \raggedright
            \setlength{\parindent}{0.5in}
            \indent\@acks\par%
@@ -2672,7 +2674,7 @@ and the derived files           apa7.ins,
     \noindent\@abstract\par% BDB
     \@ifundefined{@keywords}{}{%
       \setlength{\parindent}{0.5in}% BDB
-      \indent\textit{\keywordname:} \@keywords%
+      \indent\textit{\GetTranslation{keywordname}:} \@keywords%
     }%
     \newpage
   }
@@ -2848,7 +2850,7 @@ and the derived files           apa7.ins,
   {\par \parbox{4.6875in}
    {\small \noindent \@abstract
      \@ifundefined{@keywords}{}{%
-      \par\vspace{0.12in}\raggedright\textit{\keywordname:} \@keywords%
+      \par\vspace{0.12in}\raggedright\textit{\GetTranslation{keywordname}:} \@keywords%
      }%
    }
    \vspace{0.24in}%
@@ -3104,7 +3106,7 @@ and the derived files           apa7.ins,
 
    \parbox{5in}{\@abstract%
      \@ifundefined{@keywords}{}{%
-       \par\vspace{0.12in}\textit{\keywordname:} \@keywords%
+       \par\vspace{0.12in}\textit{\GetTranslation{keywordname}:} \@keywords%
      }%
    }\vspace{0.25in}%
   }
@@ -3423,7 +3425,7 @@ and the derived files           apa7.ins,
 %<*shortsample>
 \documentclass[jou]{apa7}
 
-\usepackage[american]{babel}
+\usepackage[hungarian,british]{babel}
 
 \usepackage{csquotes}
 \usepackage[style=apa,backend=biber]{biblatex}
@@ -3462,7 +3464,7 @@ We had a lot of people in this study, show in Figure \ref{fig:Figure1}.
 \begin{figure}[!htp]
     \caption{This is my figure caption.}
     \includegraphics[bb=0in 0in 2.5in 2.5in, height=1.4in, width=1.4in]{Figure1.pdf}
-    \figurenote{This is an awesome figure.}
+    \foreignlanguage{hungarian}{\figurenote{This is an awesome figure with a Hungarian note label.}}
     \label{fig:Figure1}
 \end{figure}
 
@@ -3539,7 +3541,7 @@ skill in interpreting the results for the masses.
 
 \usepackage{lipsum}
 
-\usepackage[american]{babel}
+\usepackage[dutch,american]{babel}
 
 \usepackage{csquotes}
 \usepackage[style=apa,backend=biber]{biblatex}
@@ -3548,7 +3550,7 @@ skill in interpreting the results for the masses.
 \title{Sample APA-Style Document Using the \textsf{apa7} Package}
 \shorttitle{Sample Document}
 
-\authorsnames{Daniel A. Weiss}
+\authorsnames{Daniel A. Weiss, J. Random Hacker}
 \authorsaffiliations{A University Somewhere}
 
 \leftheader{Weiss}
@@ -3628,7 +3630,7 @@ Table~\ref{tab:BasicTable} summarizes the data. \lipsum[15]
 \begin{figure}
     \caption{This is my first figure caption.}
     \includegraphics[bb=0in 0in 2.5in 2.5in, height=2.5in, width=2.5in]{Figure1.pdf}
-    \figurenote{This is a great figure.}
+    \foreignlanguage{dutch}{\figurenote{This is a great figure with a Dutch note label.}}
     \label{fig:Figure1}
 \end{figure}
 
@@ -3698,16 +3700,16 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %
 % %%%%%%%%%%%  CONFIGURATION FILES  %%%%%%%%%%%%
 %
-%\begin{macro}{APA7american.txt}
+%\begin{macro}{apa7-american.trsl}
 %    \begin{macrocode}
 %<*american>
-\ProvidesFile{APA7american.txt}[2020/12/02 v1.02 apa7 configuration for American English]
+\ProvideDictionaryFor{american}{apa7}[2022/12/03 v1.00 apa7 configuration for American English]
 
-\renewcommand{\lastauthorseparator}{and}
-\renewcommand{\acksname}{Author Note}
-\renewcommand{\keywordname}{Keywords}
-\renewcommand{\notesname}{Footnotes}
-\renewcommand{\notelabel}{Note}
+\NewDictTranslation{lastauthorseparator}{and}
+\NewDictTranslation{acksname}{Author Note}
+\NewDictTranslation{keywordname}{Keywords}
+\NewDictTranslation{notesname}{Footnotes}
+\NewDictTranslation{notelabel}{Note}
 
 
 %</american>
@@ -3715,16 +3717,16 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\end{macro}
 %
 %
-%\begin{macro}{APA7british.txt}
+%\begin{macro}{apa7-british.trsl}
 %    \begin{macrocode}
 %<*british>
-\ProvidesFile{APA7british.txt}[2020/12/02 v1.02 apa7 configuration for British English]
+\ProvideDictionaryFor{british}{apa7}[2022/12/03 v1.00 apa7 configuration for British English]
 
-\renewcommand{\lastauthorseparator}{and}
-\renewcommand{\acksname}{Author Note}
-\renewcommand{\keywordname}{Keywords}
-\renewcommand{\notesname}{Footnotes}
-\renewcommand{\notelabel}{Note}
+\NewDictTranslation{lastauthorseparator}{and}
+\NewDictTranslation{acksname}{Author Note}
+\NewDictTranslation{keywordname}{Keywords}
+\NewDictTranslation{notesname}{Footnotes}
+\NewDictTranslation{notelabel}{Note}
 
 
 %</british>
@@ -3732,143 +3734,143 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\end{macro}
 %
 %
-%\begin{macro}{APA7english.txt}
+%\begin{macro}{apa7-english.trsl}
 %    \begin{macrocode}
 %<*english>
-\ProvidesFile{APA7english.txt}[2020/12/02 v1.02 apa7 configuration for non-American English]
+\ProvideDictionaryFor{english}{apa7}[2022/12/03 v1.00 apa7 configuration for non-American English]
 
-\renewcommand{\lastauthorseparator}{and}
-\renewcommand{\acksname}{Author Note}
-\renewcommand{\keywordname}{Keywords}
-\renewcommand{\notesname}{Footnotes}
-\renewcommand{\notelabel}{Note}
+\NewDictTranslation{lastauthorseparator}{and}
+\NewDictTranslation{acksname}{Author Note}
+\NewDictTranslation{keywordname}{Keywords}
+\NewDictTranslation{notesname}{Footnotes}
+\NewDictTranslation{notelabel}{Note}
 
 %</english>
 %    \end{macrocode}
 %\end{macro}
 %
 %
-%\begin{macro}{APA7french.txt}
+%\begin{macro}{apa7-french.trsl}
 %    \begin{macrocode}
 %<*french>
-\ProvidesFile{APA7french.txt}[2020/12/02 v1.02 apa7 configuration for French] % translation by lejun[at]gmx.fr
+\ProvideDictionaryFor{french}{apa7}[2022/12/03 v1.00 apa7 configuration for French] % translation by lejun[at]gmx.fr
 
-\renewcommand{\lastauthorseparator}{et}% and
-\renewcommand{\acksname}{Note de l'auteur}% Author Note
-\renewcommand{\keywordname}{Mots Clés}% Keywords
-\renewcommand{\notesname}{Notes de bas de page}% Footnotes
-\renewcommand{\notelabel}{Note}%Note
+\NewDictTranslation{lastauthorseparator}{et}% and
+\NewDictTranslation{acksname}{Note de l'auteur}% Author Note
+\NewDictTranslation{keywordname}{Mots Clés}% Keywords
+\NewDictTranslation{notesname}{Notes de bas de page}% Footnotes
+\NewDictTranslation{notelabel}{Note}%Note
 
 %</french>
 %    \end{macrocode}
 %\end{macro}
 %
 %
-%\begin{macro}{APA7dutch.txt}
+%\begin{macro}{apa7-dutch.trsl}
 %    \begin{macrocode}
 %<*dutch>
-\ProvidesFile{APA7dutch.txt}[2020/12/02 v1.02 apa7 configuration for Dutch]
+\ProvideDictionaryFor{dutch}{apa7}[2022/12/03 v1.00 apa7 configuration for Dutch]
 
-\renewcommand{\lastauthorseparator}{en}% and
-\renewcommand{\acksname}{Auteursnoot}% Author Note
-\renewcommand{\keywordname}{Trefwoorden}% Keywords
-\renewcommand{\notesname}{Voetnoten}% Footnotes
-\renewcommand{\notelabel}{Noot}%Note
+\NewDictTranslation{lastauthorseparator}{en}% and
+\NewDictTranslation{acksname}{Auteursnoot}% Author Note
+\NewDictTranslation{keywordname}{Trefwoorden}% Keywords
+\NewDictTranslation{notesname}{Voetnoten}% Footnotes
+\NewDictTranslation{notelabel}{Opmerking}%Note
 
 %</dutch>
 %    \end{macrocode}
 %\end{macro}
 %
 %
-%\begin{macro}{APA7german.txt}
+%\begin{macro}{apa7-german.trsl}
 %    \begin{macrocode}
 %<*german>
-\ProvidesFile{APA7german.txt}[2020/12/02 v1.02 apa7 configuration for German]
+\ProvideDictionaryFor{german}{apa7}[2022/12/03 v1.00 apa7 configuration for German]
 
-\renewcommand{\lastauthorseparator}{und}% and
-\renewcommand{\acksname}{Autorenhinweis}% Author Note
-\renewcommand{\keywordname}{Schl\"usselw\"orter}% Keywords
-\renewcommand{\notesname}{Fußnoten}% Footnotes
-\renewcommand{\notelabel}{Anmerkung}%Note
+\NewDictTranslation{lastauthorseparator}{und}% and
+\NewDictTranslation{acksname}{Autorenhinweis}% Author Note
+\NewDictTranslation{keywordname}{Schl\"usselw\"orter}% Keywords
+\NewDictTranslation{notesname}{Fußnoten}% Footnotes
+\NewDictTranslation{notelabel}{Anmerkung}%Note
 
 %</german>
 %    \end{macrocode}
 %\end{macro}
 %
 %
-%\begin{macro}{APA7ngerman.txt}
+%\begin{macro}{apa7-ngerman.trsl}
 %    \begin{macrocode}
 %<*ngerman>
-\ProvidesFile{APA7ngerman.txt}[2020/12/02 v1.02 apa7 configuration for "new" German]
+\ProvideDictionaryFor{ngerman}{apa7}[2022/12/03 v1.00 apa7 configuration for "new" German]
 
-\renewcommand{\lastauthorseparator}{und}% and
-\renewcommand{\acksname}{Autorenhinweis}% Author Note
-\renewcommand{\keywordname}{Schl\"usselw\"orter}% Keywords
-\renewcommand{\notesname}{Fußnoten}% Footnotes
-\renewcommand{\notelabel}{Anmerkung}%Note
+\NewDictTranslation{lastauthorseparator}{und}% and
+\NewDictTranslation{acksname}{Autorenhinweis}% Author Note
+\NewDictTranslation{keywordname}{Schl\"usselw\"orter}% Keywords
+\NewDictTranslation{notesname}{Fußnoten}% Footnotes
+\NewDictTranslation{notelabel}{Anmerkung}%Note
 
 %</ngerman>
 %    \end{macrocode}
 %\end{macro}
 %
 %
-%\begin{macro}{APA7greek.txt}
+%\begin{macro}{apa7-greek.trsl}
 %    \begin{macrocode}
 %<*greek>
-\ProvidesFile{APA7greek.txt}[2020/12/02 v1.02 apa7 configuration for Greek]
+\ProvideDictionaryFor{greek}{apa7}[2022/12/03 v1.00 apa7 configuration for Greek]
 
-\renewcommand{\lastauthorseparator}{και}% and
-\renewcommand{\acksname}{Σημείωση του συγγραφέα}% Author Note
-\renewcommand{\keywordname}{λέξεις-κλειδιά}% Keywords
-\renewcommand{\notesname}{υποσημείωση}% Footnotes
-\renewcommand{\notelabel}{Σημείωση}%Note
+\NewDictTranslation{lastauthorseparator}{και}% and
+\NewDictTranslation{acksname}{Σημείωση του συγγραφέα}% Author Note
+\NewDictTranslation{keywordname}{λέξεις-κλειδιά}% Keywords
+\NewDictTranslation{notesname}{υποσημείωση}% Footnotes
+\NewDictTranslation{notelabel}{Σημείωση}%Note
 
 %</greek>
 %    \end{macrocode}
 %\end{macro}
 %
 %
-%\begin{macro}{APA7czech.txt}
+%\begin{macro}{apa7-czech.trsl}
 %    \begin{macrocode}
 %<*czech>
-\ProvidesFile{APA7czech.txt}[2020/12/02 v1.02 apa7 configuration for Czech]
+\ProvideDictionaryFor{czech}{apa7}[2022/12/03 v1.00 apa7 configuration for Czech]
 
-\renewcommand{\lastauthorseparator}{a}% and
-\renewcommand{\acksname}{Poznámka~autora}% Author Note
-\renewcommand{\keywordname}{Klícová~1slova}% Keywords
-\renewcommand{\notesname}{Poznámky}% Footnotes
-\renewcommand{\notelabel}{Nota}%Note
+\NewDictTranslation{lastauthorseparator}{a}% and
+\NewDictTranslation{acksname}{Poznámka~autora}% Author Note
+\NewDictTranslation{keywordname}{Klícová~1slova}% Keywords
+\NewDictTranslation{notesname}{Poznámky}% Footnotes
+\NewDictTranslation{notelabel}{Nota}%Note
 
 %</czech>
 %    \end{macrocode}
 %\end{macro}
 %
 %
-%\begin{macro}{APA7turkish.txt}
+%\begin{macro}{apa7-turkish.trsl}
 %    \begin{macrocode}
 %<*turkish>
-\ProvidesFile{APA7turkish.txt}[2020/12/02 v1.02 apa7 configuration for Turkish]
+\ProvideDictionaryFor{turkish}{apa7}[2022/12/03 v1.00 apa7 configuration for Turkish]
 
-\renewcommand{\lastauthorseparator}{ve}% and
-\renewcommand{\acksname}{Yazar Notu}% Author Note
-\renewcommand{\keywordname}{Anahtar Kelimeler}% Keywords
-\renewcommand{\notesname}{Dipnotlar}% Footnotes
-\renewcommand{\notelabel}{Not}%Note
+\NewDictTranslation{lastauthorseparator}{ve}% and
+\NewDictTranslation{acksname}{Yazar Notu}% Author Note
+\NewDictTranslation{keywordname}{Anahtar Kelimeler}% Keywords
+\NewDictTranslation{notesname}{Dipnotlar}% Footnotes
+\NewDictTranslation{notelabel}{Not}%Note
 
 %</turkish>
 %    \end{macrocode}
 %\end{macro}
 %
 %
-%\begin{macro}{APA7spanish.txt}
+%\begin{macro}{apa7-spanish.trsl}
 %    \begin{macrocode}
 %<*spanish>
-\ProvidesFile{APA7spanish.txt}[2021/08/08 v1.00 apa7 configuration for Spanish]
+\ProvideDictionaryFor{spanish}{apa7}[2022/12/03 v1.00 apa7 configuration for Spanish]
 
-\renewcommand{\lastauthorseparator}{y}% and
-\renewcommand{\acksname}{Nota del Autor}% Author Note
-\renewcommand{\keywordname}{Palabras Claves}% Keywords
-\renewcommand{\notesname}{Notas}% Footnotes
+\NewDictTranslation{lastauthorseparator}{y}% and
+\NewDictTranslation{acksname}{Nota del Autor}% Author Note
+\NewDictTranslation{keywordname}{Palabras Claves}% Keywords
+\NewDictTranslation{notesname}{Notas}% Footnotes
 %Note
 
 %</spanish>
@@ -3876,16 +3878,16 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 %\end{macro}
 %
 %
-%\begin{macro}{APA7hungarian.txt}
+%\begin{macro}{apa7-hungarian.trsl}
 %    \begin{macrocode}
 %<*hungarian>
-\ProvidesFile{APA7hungarian.txt}[2022/07/25 v1.00 apa7 configuration for Hungarian - added by Robert Fodor]
+\ProvideDictionaryFor{hungarian}{apa7}[2022/12/03 v1.00 apa7 configuration for Hungarian - added by Robert Fodor]
 
-\renewcommand{\lastauthorseparator}{és}% and
-\renewcommand{\acksname}{Szerzői megjegyzés}% Author Note
-\renewcommand{\keywordname}{Kulcsszavak}% Keywords
-\renewcommand{\notesname}{Lábjegyzet}% Footnotes
-\renewcommand{\notelabel}{Megjegyzés}% Note
+\NewDictTranslation{lastauthorseparator}{és}% and
+\NewDictTranslation{acksname}{Szerzői megjegyzés}% Author Note
+\NewDictTranslation{keywordname}{Kulcsszavak}% Keywords
+\NewDictTranslation{notesname}{Lábjegyzet}% Footnotes
+\NewDictTranslation{notelabel}{Megjegyzés}% Note
 %Note
 
 %</hungarian>
