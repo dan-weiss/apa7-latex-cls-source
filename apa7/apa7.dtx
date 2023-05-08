@@ -1479,6 +1479,7 @@ and the derived files           apa7.ins,
 % Based on handling of the same issue in apacite.sty
 
 % First define the default American English macros in case no external file is present or needed
+\def\prelastauthorsep{,}
 \def\lastauthorseparator{and}
 \def\acksname{Author Note}
 \def\keywordname{Keywords}
@@ -2012,20 +2013,18 @@ and the derived files           apa7.ins,
 \newcommand*{\authorsep}{}%
 \newcommand*{\lastauthor}{}%
 \newcommand*{\prelastauthor}{}%
-\newcommand*{\prelastauthorsep}{}%
 
 \newcommand{\displayauthors}{%
   \renewcommand*{\authorsep}{}%
   \renewcommand*{\lastauthor}{}%
   \renewcommand*{\prelastauthor}{}%
-  \renewcommand*{\prelastauthorsep}{}%
   \ifnum\value{NumberOfSuperscripts}=0% If no superscripts are specified, print authors without superscripts.
 	\renewcommand*{\do}[1]{%
       \authorsep%
     \lastauthor%
     \renewcommand{\lastauthor}{%
       \renewcommand{\authorsep}{, 
-        \renewcommand*{\prelastauthorsep}{,}}%
+        }%
       \renewcommand{\prelastauthor}{\prelastauthorsep\ \lastauthorseparator\ }% Terminated commands with \ to preserve following space
       ##1%
     }%
@@ -2037,7 +2036,7 @@ and the derived files           apa7.ins,
     \lastauthor%
     \renewcommand{\lastauthor}{%
       \renewcommand{\authorsep}{, 
-        \renewcommand*{\prelastauthorsep}{,}}%
+        }%
       \renewcommand{\prelastauthor}{\prelastauthorsep\ \lastauthorseparator\ }% Terminated commands with \ to preserve following space
       ##1\textsuperscript{##2}%
     }%
@@ -3854,6 +3853,7 @@ The detailed results are shown in Table~\ref{tab:DeckedTable}. \lipsum[22]
 \renewcommand{\keywordname}{Anahtar Kelimeler}% Keywords
 \renewcommand{\notesname}{Dipnotlar}% Footnotes
 \renewcommand{\notelabel}{Not}%Note
+\renewcommand*{\prelastauthorsep}{}% Turkish does not use an Oxford-comma like seperator
 
 %</turkish>
 %    \end{macrocode}
